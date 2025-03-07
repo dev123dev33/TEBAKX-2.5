@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tebak Angka v1.4</title>
+  <title>Tebak Angka v1.5</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -69,11 +69,16 @@
       font-size: 16px;
       color: #3F51B5;
     }
+    .stats {
+      margin-top: 15px;
+      font-size: 16px;
+      color: #009688;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Tebak Angka v1.4</h1>
+    <h1>Tebak Angka v1.5</h1>
     <p>Saya telah memilih sebuah angka antara 1 dan 100.</p>
     <input type="number" id="guess" placeholder="Masukkan tebakan">
     <div>
@@ -86,7 +91,11 @@
     <div class="hint" id="hint"></div>
     <div class="feedback" id="feedback"></div>
     <div class="highscore" id="highscore"></div>
-    <button id="clearScoreBtn" onclick="clearHighScore()">Clear High Score</button>
+    <div class="stats" id="stats"></div>
+    <div>
+      <button id="clearScoreBtn" onclick="clearHighScore()">Clear High Score</button>
+      <button id="clearStatsBtn" onclick="clearGameStats()">Reset Statistics</button>
+    </div>
   </div>
 
   <script>
@@ -109,6 +118,7 @@
       document.getElementById('hintBtn').disabled = false;
       document.getElementById('guess').value = '';
       displayHighScore();
+      displayGameStats();
       console.log("Secret Number (debug):", secretNumber);
     }
 
@@ -127,7 +137,7 @@
       attempts++;
       guessHistory.push(guess);
 
-      // Memberikan feedback berdasarkan seberapa dekat tebakan dengan angka rahasia
+      // Memberikan feedback suhu berdasarkan jarak tebakan ke angka rahasia
       const diff = Math.abs(guess - secretNumber);
       if (guess !== secretNumber) {
         if (diff <= 5) {
@@ -154,6 +164,7 @@
         document.getElementById('resetBtn').style.display = 'inline-block';
         document.getElementById('hintBtn').disabled = true;
         updateHighScore();
+        updateGameStats();
       }
       guessesDiv.textContent = 'Tebakan Anda: ' + guessHistory.join(', ');
       guessInput.value = '';
@@ -197,6 +208,37 @@
     function clearHighScore() {
       localStorage.removeItem('highScore');
       displayHighScore();
+    }
+
+    // Fitur Statistics: menyimpan total permainan dan total tebakan
+    function updateGameStats() {
+      let totalGames = localStorage.getItem('totalGames');
+      let totalAttempts = localStorage.getItem('totalAttempts');
+      totalGames = totalGames ? Number(totalGames) + 1 : 1;
+      totalAttempts = totalAttempts ? Number(totalAttempts) + attempts : attempts;
+      localStorage.setItem('totalGames', totalGames);
+      localStorage.setItem('totalAttempts', totalAttempts);
+      displayGameStats();
+    }
+
+    function displayGameStats() {
+      const statsDiv = document.getElementById('stats');
+      let totalGames = localStorage.getItem('totalGames');
+      let totalAttempts = localStorage.getItem('totalAttempts');
+      if (totalGames && totalAttempts) {
+        totalGames = Number(totalGames);
+        totalAttempts = Number(totalAttempts);
+        const avgAttempts = (totalAttempts / totalGames).toFixed(2);
+        statsDiv.textContent = `Statistics - Total Games: ${totalGames}, Total Attempts: ${totalAttempts}, Average Attempts: ${avgAttempts}`;
+      } else {
+        statsDiv.textContent = 'No statistics available.';
+      }
+    }
+
+    function clearGameStats() {
+      localStorage.removeItem('totalGames');
+      localStorage.removeItem('totalAttempts');
+      displayGameStats();
     }
 
     window.onload = initGame;
