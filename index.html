@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tebak Angka v1.1</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 300px;
+    }
+    input[type="number"] {
+      padding: 10px;
+      margin: 10px 0;
+      width: 100%;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      background: #4CAF50;
+      color: #fff;
+      border-radius: 4px;
+      margin: 5px;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .guesses {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Tebak Angka v1.1</h1>
+    <p>Saya telah memilih sebuah angka antara 1 dan 100.</p>
+    <input type="number" id="guess" placeholder="Masukkan tebakan">
+    <div>
+      <button id="guessBtn" onclick="makeGuess()">Tebak</button>
+      <button id="resetBtn" onclick="resetGame()" style="display: none;">Reset</button>
+    </div>
+    <div class="result" id="result"></div>
+    <div class="guesses" id="guesses"></div>
+  </div>
+
+  <script>
+    let secretNumber;
+    let attempts;
+    let guessHistory = [];
+
+    function initGame() {
+      secretNumber = Math.floor(Math.random() * 100) + 1;
+      attempts = 0;
+      guessHistory = [];
+      document.getElementById('result').textContent = '';
+      document.getElementById('guesses').textContent = '';
+      document.getElementById('guess').disabled = false;
+      document.getElementById('guessBtn').disabled = false;
+      document.getElementById('resetBtn').style.display = 'none';
+      document.getElementById('guess').value = '';
+      console.log("Secret Number (debug):", secretNumber);
+    }
+
+    function makeGuess() {
+      const guessInput = document.getElementById('guess');
+      const resultDiv = document.getElementById('result');
+      const guessesDiv = document.getElementById('guesses');
+      const guess = Number(guessInput.value);
+
+      if (!guess) {
+        resultDiv.textContent = 'Masukkan angka yang valid!';
+        return;
+      }
+      
+      attempts++;
+      guessHistory.push(guess);
+
+      if (guess < secretNumber) {
+        resultDiv.textContent = 'Terlalu kecil! Coba lagi.';
+      } else if (guess > secretNumber) {
+        resultDiv.textContent = 'Terlalu besar! Coba lagi.';
+      } else {
+        resultDiv.textContent = `Selamat! Anda berhasil menebak angka ${secretNumber} dalam ${attempts} percobaan.`;
+        document.getElementById('guess').disabled = true;
+        document.getElementById('guessBtn').disabled = true;
+        document.getElementById('resetBtn').style.display = 'inline-block';
+      }
+      guessesDiv.textContent = 'Tebakan Anda: ' + guessHistory.join(', ');
+      guessInput.value = '';
+      guessInput.focus();
+    }
+
+    function resetGame() {
+      initGame();
+    }
+
+    // Inisialisasi game saat halaman dibuka
+    window.onload = initGame;
+  </script>
+</body>
+</html>
