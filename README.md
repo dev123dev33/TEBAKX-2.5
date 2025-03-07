@@ -1,1 +1,1 @@
-# tebak-angka-sederhana-1.1
+# tebak-angka-sederhana-1.2
