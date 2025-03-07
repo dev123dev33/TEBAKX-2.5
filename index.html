@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tebak Angka v1.1</title>
+  <title>Tebak Angka v1.2</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -40,6 +40,9 @@
       border-radius: 4px;
       margin: 5px;
     }
+    button:disabled {
+      background: #9E9E9E;
+    }
     .result {
       margin-top: 20px;
       font-size: 18px;
@@ -49,19 +52,27 @@
       margin-top: 10px;
       font-size: 14px;
     }
+    .hint {
+      margin-top: 10px;
+      font-size: 16px;
+      font-style: italic;
+      color: #FF5722;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Tebak Angka v1.1</h1>
+    <h1>Tebak Angka v1.2</h1>
     <p>Saya telah memilih sebuah angka antara 1 dan 100.</p>
     <input type="number" id="guess" placeholder="Masukkan tebakan">
     <div>
       <button id="guessBtn" onclick="makeGuess()">Tebak</button>
       <button id="resetBtn" onclick="resetGame()" style="display: none;">Reset</button>
+      <button id="hintBtn" onclick="showHint()">Hint</button>
     </div>
     <div class="result" id="result"></div>
     <div class="guesses" id="guesses"></div>
+    <div class="hint" id="hint"></div>
   </div>
 
   <script>
@@ -75,9 +86,11 @@
       guessHistory = [];
       document.getElementById('result').textContent = '';
       document.getElementById('guesses').textContent = '';
+      document.getElementById('hint').textContent = '';
       document.getElementById('guess').disabled = false;
       document.getElementById('guessBtn').disabled = false;
       document.getElementById('resetBtn').style.display = 'none';
+      document.getElementById('hintBtn').disabled = false;
       document.getElementById('guess').value = '';
       console.log("Secret Number (debug):", secretNumber);
     }
@@ -88,11 +101,11 @@
       const guessesDiv = document.getElementById('guesses');
       const guess = Number(guessInput.value);
 
-      if (!guess) {
+      if (!guess && guess !== 0) {
         resultDiv.textContent = 'Masukkan angka yang valid!';
         return;
       }
-      
+
       attempts++;
       guessHistory.push(guess);
 
@@ -105,17 +118,31 @@
         document.getElementById('guess').disabled = true;
         document.getElementById('guessBtn').disabled = true;
         document.getElementById('resetBtn').style.display = 'inline-block';
+        document.getElementById('hintBtn').disabled = true;
       }
       guessesDiv.textContent = 'Tebakan Anda: ' + guessHistory.join(', ');
       guessInput.value = '';
       guessInput.focus();
     }
 
+    function showHint() {
+      const hintDiv = document.getElementById('hint');
+      // Memberikan hint setelah 3 percobaan
+      if (attempts >= 3) {
+        hintDiv.textContent = secretNumber % 2 === 0 
+          ? 'Hint: Angka rahasia adalah genap.' 
+          : 'Hint: Angka rahasia adalah ganjil.';
+        // Menonaktifkan tombol hint agar hint tidak berulang
+        document.getElementById('hintBtn').disabled = true;
+      } else {
+        hintDiv.textContent = 'Cobalah beberapa tebakan terlebih dahulu untuk mendapatkan hint!';
+      }
+    }
+
     function resetGame() {
       initGame();
     }
 
-    // Inisialisasi game saat halaman dibuka
     window.onload = initGame;
   </script>
 </body>
