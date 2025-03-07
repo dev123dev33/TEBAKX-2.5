@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tebak Angka v1.2</title>
+  <title>Tebak Angka v1.3</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -58,11 +58,16 @@
       font-style: italic;
       color: #FF5722;
     }
+    .highscore {
+      margin-top: 15px;
+      font-size: 16px;
+      color: #3F51B5;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Tebak Angka v1.2</h1>
+    <h1>Tebak Angka v1.3</h1>
     <p>Saya telah memilih sebuah angka antara 1 dan 100.</p>
     <input type="number" id="guess" placeholder="Masukkan tebakan">
     <div>
@@ -73,12 +78,15 @@
     <div class="result" id="result"></div>
     <div class="guesses" id="guesses"></div>
     <div class="hint" id="hint"></div>
+    <div class="highscore" id="highscore"></div>
+    <button id="clearScoreBtn" onclick="clearHighScore()">Clear High Score</button>
   </div>
 
   <script>
     let secretNumber;
     let attempts;
     let guessHistory = [];
+    let bestScore;
 
     function initGame() {
       secretNumber = Math.floor(Math.random() * 100) + 1;
@@ -92,6 +100,7 @@
       document.getElementById('resetBtn').style.display = 'none';
       document.getElementById('hintBtn').disabled = false;
       document.getElementById('guess').value = '';
+      displayHighScore();
       console.log("Secret Number (debug):", secretNumber);
     }
 
@@ -119,6 +128,7 @@
         document.getElementById('guessBtn').disabled = true;
         document.getElementById('resetBtn').style.display = 'inline-block';
         document.getElementById('hintBtn').disabled = true;
+        updateHighScore();
       }
       guessesDiv.textContent = 'Tebakan Anda: ' + guessHistory.join(', ');
       guessInput.value = '';
@@ -127,12 +137,10 @@
 
     function showHint() {
       const hintDiv = document.getElementById('hint');
-      // Memberikan hint setelah 3 percobaan
       if (attempts >= 3) {
         hintDiv.textContent = secretNumber % 2 === 0 
           ? 'Hint: Angka rahasia adalah genap.' 
           : 'Hint: Angka rahasia adalah ganjil.';
-        // Menonaktifkan tombol hint agar hint tidak berulang
         document.getElementById('hintBtn').disabled = true;
       } else {
         hintDiv.textContent = 'Cobalah beberapa tebakan terlebih dahulu untuk mendapatkan hint!';
@@ -141,6 +149,30 @@
 
     function resetGame() {
       initGame();
+    }
+
+    function updateHighScore() {
+      // Ambil high score dari localStorage
+      bestScore = localStorage.getItem('highScore');
+      if (!bestScore || attempts < bestScore) {
+        localStorage.setItem('highScore', attempts);
+      }
+      displayHighScore();
+    }
+
+    function displayHighScore() {
+      bestScore = localStorage.getItem('highScore');
+      const highscoreDiv = document.getElementById('highscore');
+      if (bestScore) {
+        highscoreDiv.textContent = 'Best Score: ' + bestScore + ' percobaan';
+      } else {
+        highscoreDiv.textContent = 'Belum ada Best Score.';
+      }
+    }
+
+    function clearHighScore() {
+      localStorage.removeItem('highScore');
+      displayHighScore();
     }
 
     window.onload = initGame;
