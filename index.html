@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tebak Angka v1.3</title>
+  <title>Tebak Angka v1.4</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -58,6 +58,12 @@
       font-style: italic;
       color: #FF5722;
     }
+    .feedback {
+      margin-top: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #E91E63;
+    }
     .highscore {
       margin-top: 15px;
       font-size: 16px;
@@ -67,7 +73,7 @@
 </head>
 <body>
   <div class="container">
-    <h1>Tebak Angka v1.3</h1>
+    <h1>Tebak Angka v1.4</h1>
     <p>Saya telah memilih sebuah angka antara 1 dan 100.</p>
     <input type="number" id="guess" placeholder="Masukkan tebakan">
     <div>
@@ -78,6 +84,7 @@
     <div class="result" id="result"></div>
     <div class="guesses" id="guesses"></div>
     <div class="hint" id="hint"></div>
+    <div class="feedback" id="feedback"></div>
     <div class="highscore" id="highscore"></div>
     <button id="clearScoreBtn" onclick="clearHighScore()">Clear High Score</button>
   </div>
@@ -95,6 +102,7 @@
       document.getElementById('result').textContent = '';
       document.getElementById('guesses').textContent = '';
       document.getElementById('hint').textContent = '';
+      document.getElementById('feedback').textContent = '';
       document.getElementById('guess').disabled = false;
       document.getElementById('guessBtn').disabled = false;
       document.getElementById('resetBtn').style.display = 'none';
@@ -108,6 +116,7 @@
       const guessInput = document.getElementById('guess');
       const resultDiv = document.getElementById('result');
       const guessesDiv = document.getElementById('guesses');
+      const feedbackDiv = document.getElementById('feedback');
       const guess = Number(guessInput.value);
 
       if (!guess && guess !== 0) {
@@ -117,6 +126,22 @@
 
       attempts++;
       guessHistory.push(guess);
+
+      // Memberikan feedback berdasarkan seberapa dekat tebakan dengan angka rahasia
+      const diff = Math.abs(guess - secretNumber);
+      if (guess !== secretNumber) {
+        if (diff <= 5) {
+          feedbackDiv.textContent = 'Sangat panas! Kamu sangat dekat.';
+        } else if (diff <= 10) {
+          feedbackDiv.textContent = 'Hangat! Coba lagi.';
+        } else if (diff <= 20) {
+          feedbackDiv.textContent = 'Cukup dekat, tapi masih jauh.';
+        } else {
+          feedbackDiv.textContent = 'Dingin! Tebakanmu terlalu jauh.';
+        }
+      } else {
+        feedbackDiv.textContent = '';
+      }
 
       if (guess < secretNumber) {
         resultDiv.textContent = 'Terlalu kecil! Coba lagi.';
@@ -152,7 +177,6 @@
     }
 
     function updateHighScore() {
-      // Ambil high score dari localStorage
       bestScore = localStorage.getItem('highScore');
       if (!bestScore || attempts < bestScore) {
         localStorage.setItem('highScore', attempts);
