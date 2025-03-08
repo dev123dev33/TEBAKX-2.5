@@ -3,85 +3,74 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tebak Angka v1.5</title>
+  <title>Tebak Angka v1.7</title>
+  <!-- Google Fonts untuk tampilan modern -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    /* Reset dan styling dasar */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: Arial, sans-serif;
-      background: #f2f2f2;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      min-height: 100vh;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      margin: 0;
+      padding: 20px;
     }
     .container {
       background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      text-align: center;
-      width: 300px;
-    }
-    input[type="number"] {
-      padding: 10px;
-      margin: 10px 0;
+      border-radius: 12px;
+      padding: 25px 30px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.25);
       width: 100%;
-      font-size: 16px;
-      box-sizing: border-box;
+      max-width: 400px;
+      text-align: center;
+      animation: fadeIn 0.5s ease-in-out;
     }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    h1 { font-size: 1.8em; margin-bottom: 10px; color: #333; }
+    p { margin-bottom: 20px; color: #666; }
+    input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      font-size: 16px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      transition: border-color 0.3s;
+    }
+    input[type="number"]:focus { border-color: #2575fc; outline: none; }
+    .btn-group { margin-bottom: 15px; }
     button {
       padding: 10px 20px;
       font-size: 16px;
-      cursor: pointer;
       border: none;
-      background: #4CAF50;
-      color: #fff;
-      border-radius: 4px;
+      border-radius: 8px;
+      cursor: pointer;
       margin: 5px;
+      transition: background-color 0.3s, transform 0.2s;
     }
-    button:disabled {
-      background: #9E9E9E;
-    }
-    .result {
-      margin-top: 20px;
-      font-size: 18px;
-      font-weight: bold;
-    }
-    .guesses {
-      margin-top: 10px;
-      font-size: 14px;
-    }
-    .hint {
-      margin-top: 10px;
-      font-size: 16px;
-      font-style: italic;
-      color: #FF5722;
-    }
-    .feedback {
-      margin-top: 10px;
-      font-size: 16px;
-      font-weight: bold;
-      color: #E91E63;
-    }
-    .highscore {
-      margin-top: 15px;
-      font-size: 16px;
-      color: #3F51B5;
-    }
-    .stats {
-      margin-top: 15px;
-      font-size: 16px;
-      color: #009688;
-    }
+    button:hover { transform: translateY(-2px); }
+    button:disabled { background-color: #ccc; cursor: not-allowed; }
+    #guessBtn { background-color: #2575fc; color: #fff; }
+    #resetBtn { background-color: #ff9800; color: #fff; }
+    #hintBtn { background-color: #4caf50; color: #fff; }
+    .result { font-size: 18px; font-weight: bold; color: #333; margin-bottom: 10px; }
+    .guesses, .hint, .feedback, .highscore, .stats { font-size: 16px; margin-bottom: 10px; color: #555; }
+    .clear-buttons button { background-color: #e91e63; color: #fff; }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Tebak Angka v1.5</h1>
+    <h1>Tebak Angka v1.7</h1>
     <p>Saya telah memilih sebuah angka antara 1 dan 100.</p>
     <input type="number" id="guess" placeholder="Masukkan tebakan">
-    <div>
+    <div class="btn-group">
       <button id="guessBtn" onclick="makeGuess()">Tebak</button>
       <button id="resetBtn" onclick="resetGame()" style="display: none;">Reset</button>
       <button id="hintBtn" onclick="showHint()">Hint</button>
@@ -92,7 +81,7 @@
     <div class="feedback" id="feedback"></div>
     <div class="highscore" id="highscore"></div>
     <div class="stats" id="stats"></div>
-    <div>
+    <div class="clear-buttons">
       <button id="clearScoreBtn" onclick="clearHighScore()">Clear High Score</button>
       <button id="clearStatsBtn" onclick="clearGameStats()">Reset Statistics</button>
     </div>
@@ -103,11 +92,13 @@
     let attempts;
     let guessHistory = [];
     let bestScore;
+    let startTime; // Waktu mulai permainan
 
     function initGame() {
       secretNumber = Math.floor(Math.random() * 100) + 1;
       attempts = 0;
       guessHistory = [];
+      startTime = Date.now(); // Mulai hitung waktu
       document.getElementById('result').textContent = '';
       document.getElementById('guesses').textContent = '';
       document.getElementById('hint').textContent = '';
@@ -137,7 +128,7 @@
       attempts++;
       guessHistory.push(guess);
 
-      // Memberikan feedback suhu berdasarkan jarak tebakan ke angka rahasia
+      // Feedback suhu berdasarkan jarak tebakan ke angka rahasia
       const diff = Math.abs(guess - secretNumber);
       if (guess !== secretNumber) {
         if (diff <= 5) {
@@ -158,13 +149,15 @@
       } else if (guess > secretNumber) {
         resultDiv.textContent = 'Terlalu besar! Coba lagi.';
       } else {
-        resultDiv.textContent = `Selamat! Anda berhasil menebak angka ${secretNumber} dalam ${attempts} percobaan.`;
+        const endTime = Date.now();
+        const gameDuration = Math.floor((endTime - startTime) / 1000); // Durasi dalam detik
+        resultDiv.textContent = `Selamat! Anda berhasil menebak angka ${secretNumber} dalam ${attempts} percobaan dan ${gameDuration} detik.`;
         document.getElementById('guess').disabled = true;
         document.getElementById('guessBtn').disabled = true;
         document.getElementById('resetBtn').style.display = 'inline-block';
         document.getElementById('hintBtn').disabled = true;
         updateHighScore();
-        updateGameStats();
+        updateGameStats(gameDuration);
       }
       guessesDiv.textContent = 'Tebakan Anda: ' + guessHistory.join(', ');
       guessInput.value = '';
@@ -210,14 +203,23 @@
       displayHighScore();
     }
 
-    // Fitur Statistics: menyimpan total permainan dan total tebakan
-    function updateGameStats() {
+    // Statistik permainan termasuk total waktu bermain dan waktu tercepat
+    function updateGameStats(gameDuration) {
       let totalGames = localStorage.getItem('totalGames');
       let totalAttempts = localStorage.getItem('totalAttempts');
+      let totalTime = localStorage.getItem('totalTime');
       totalGames = totalGames ? Number(totalGames) + 1 : 1;
       totalAttempts = totalAttempts ? Number(totalAttempts) + attempts : attempts;
+      totalTime = totalTime ? Number(totalTime) + gameDuration : gameDuration;
       localStorage.setItem('totalGames', totalGames);
       localStorage.setItem('totalAttempts', totalAttempts);
+      localStorage.setItem('totalTime', totalTime);
+
+      // Update best time (waktu tercepat)
+      let bestTime = localStorage.getItem('bestTime');
+      if (!bestTime || gameDuration < bestTime) {
+        localStorage.setItem('bestTime', gameDuration);
+      }
       displayGameStats();
     }
 
@@ -225,11 +227,15 @@
       const statsDiv = document.getElementById('stats');
       let totalGames = localStorage.getItem('totalGames');
       let totalAttempts = localStorage.getItem('totalAttempts');
-      if (totalGames && totalAttempts) {
+      let totalTime = localStorage.getItem('totalTime');
+      let bestTime = localStorage.getItem('bestTime');
+      if (totalGames && totalAttempts && totalTime) {
         totalGames = Number(totalGames);
         totalAttempts = Number(totalAttempts);
+        totalTime = Number(totalTime);
         const avgAttempts = (totalAttempts / totalGames).toFixed(2);
-        statsDiv.textContent = `Statistics - Total Games: ${totalGames}, Total Attempts: ${totalAttempts}, Average Attempts: ${avgAttempts}`;
+        const avgTime = (totalTime / totalGames).toFixed(2);
+        statsDiv.textContent = `Statistics - Total Games: ${totalGames}, Total Attempts: ${totalAttempts}, Average Attempts: ${avgAttempts}, Average Time: ${avgTime} detik, Best Time: ${bestTime ? bestTime + ' detik' : '-'}`;
       } else {
         statsDiv.textContent = 'No statistics available.';
       }
@@ -238,6 +244,8 @@
     function clearGameStats() {
       localStorage.removeItem('totalGames');
       localStorage.removeItem('totalAttempts');
+      localStorage.removeItem('totalTime');
+      localStorage.removeItem('bestTime');
       displayGameStats();
     }
 
