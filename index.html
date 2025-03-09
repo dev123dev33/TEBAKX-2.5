@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tebak Angka v1.7</title>
+  <title>Tebak Angka v1.8 😎</title>
   <!-- Google Fonts untuk tampilan modern -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -67,13 +67,13 @@
 </head>
 <body>
   <div class="container">
-    <h1>Tebak Angka v1.7</h1>
-    <p>Saya telah memilih sebuah angka antara 1 dan 100.</p>
+    <h1>Tebak Angka v1.8 😎</h1>
+    <p>Saya telah memilih sebuah angka antara 1 dan 100. Coba tebak! 🤔</p>
     <input type="number" id="guess" placeholder="Masukkan tebakan">
     <div class="btn-group">
       <button id="guessBtn" onclick="makeGuess()">Tebak</button>
-      <button id="resetBtn" onclick="resetGame()" style="display: none;">Reset</button>
-      <button id="hintBtn" onclick="showHint()">Hint</button>
+      <button id="resetBtn" onclick="resetGame()" style="display: none;">Reset 🔄</button>
+      <button id="hintBtn" onclick="showHint()">Hint 💡</button>
     </div>
     <div class="result" id="result"></div>
     <div class="guesses" id="guesses"></div>
@@ -82,8 +82,8 @@
     <div class="highscore" id="highscore"></div>
     <div class="stats" id="stats"></div>
     <div class="clear-buttons">
-      <button id="clearScoreBtn" onclick="clearHighScore()">Clear High Score</button>
-      <button id="clearStatsBtn" onclick="clearGameStats()">Reset Statistics</button>
+      <button id="clearScoreBtn" onclick="clearHighScore()">Clear High Score 🗑️</button>
+      <button id="clearStatsBtn" onclick="clearGameStats()">Reset Statistics 🗑️</button>
     </div>
   </div>
 
@@ -121,37 +121,37 @@
       const guess = Number(guessInput.value);
 
       if (!guess && guess !== 0) {
-        resultDiv.textContent = 'Masukkan angka yang valid!';
+        resultDiv.textContent = 'Masukkan angka yang valid! ❌';
         return;
       }
 
       attempts++;
       guessHistory.push(guess);
 
-      // Feedback suhu berdasarkan jarak tebakan ke angka rahasia
+      // Memberikan feedback suhu dengan emotikon
       const diff = Math.abs(guess - secretNumber);
       if (guess !== secretNumber) {
         if (diff <= 5) {
-          feedbackDiv.textContent = 'Sangat panas! Kamu sangat dekat.';
+          feedbackDiv.textContent = 'Sangat panas! 🔥 Kamu sangat dekat.';
         } else if (diff <= 10) {
-          feedbackDiv.textContent = 'Hangat! Coba lagi.';
+          feedbackDiv.textContent = 'Hangat! 😊 Coba lagi.';
         } else if (diff <= 20) {
-          feedbackDiv.textContent = 'Cukup dekat, tapi masih jauh.';
+          feedbackDiv.textContent = 'Cukup dekat, tapi masih jauh. 😐';
         } else {
-          feedbackDiv.textContent = 'Dingin! Tebakanmu terlalu jauh.';
+          feedbackDiv.textContent = 'Dingin! ❄️ Tebakanmu terlalu jauh.';
         }
       } else {
         feedbackDiv.textContent = '';
       }
 
       if (guess < secretNumber) {
-        resultDiv.textContent = 'Terlalu kecil! Coba lagi.';
+        resultDiv.textContent = 'Terlalu kecil! 👇 Coba lagi.';
       } else if (guess > secretNumber) {
-        resultDiv.textContent = 'Terlalu besar! Coba lagi.';
+        resultDiv.textContent = 'Terlalu besar! 👆 Coba lagi.';
       } else {
         const endTime = Date.now();
         const gameDuration = Math.floor((endTime - startTime) / 1000); // Durasi dalam detik
-        resultDiv.textContent = `Selamat! Anda berhasil menebak angka ${secretNumber} dalam ${attempts} percobaan dan ${gameDuration} detik.`;
+        resultDiv.textContent = `Selamat! 🎉 Anda berhasil menebak angka ${secretNumber} dalam ${attempts} percobaan dan ${gameDuration} detik.`;
         document.getElementById('guess').disabled = true;
         document.getElementById('guessBtn').disabled = true;
         document.getElementById('resetBtn').style.display = 'inline-block';
@@ -168,11 +168,11 @@
       const hintDiv = document.getElementById('hint');
       if (attempts >= 3) {
         hintDiv.textContent = secretNumber % 2 === 0 
-          ? 'Hint: Angka rahasia adalah genap.' 
-          : 'Hint: Angka rahasia adalah ganjil.';
+          ? 'Hint: Angka rahasia adalah genap. ➕'
+          : 'Hint: Angka rahasia adalah ganjil. ➖';
         document.getElementById('hintBtn').disabled = true;
       } else {
-        hintDiv.textContent = 'Cobalah beberapa tebakan terlebih dahulu untuk mendapatkan hint!';
+        hintDiv.textContent = 'Cobalah beberapa tebakan terlebih dahulu untuk mendapatkan hint! 🤔';
       }
     }
 
@@ -192,7 +192,7 @@
       bestScore = localStorage.getItem('highScore');
       const highscoreDiv = document.getElementById('highscore');
       if (bestScore) {
-        highscoreDiv.textContent = 'Best Score: ' + bestScore + ' percobaan';
+        highscoreDiv.textContent = 'Best Score: ' + bestScore + ' percobaan 🏆';
       } else {
         highscoreDiv.textContent = 'Belum ada Best Score.';
       }
@@ -203,7 +203,7 @@
       displayHighScore();
     }
 
-    // Statistik permainan termasuk total waktu bermain dan waktu tercepat
+    // Statistik permainan: total games, total attempts, total time, best time
     function updateGameStats(gameDuration) {
       let totalGames = localStorage.getItem('totalGames');
       let totalAttempts = localStorage.getItem('totalAttempts');
@@ -235,7 +235,7 @@
         totalTime = Number(totalTime);
         const avgAttempts = (totalAttempts / totalGames).toFixed(2);
         const avgTime = (totalTime / totalGames).toFixed(2);
-        statsDiv.textContent = `Statistics - Total Games: ${totalGames}, Total Attempts: ${totalAttempts}, Average Attempts: ${avgAttempts}, Average Time: ${avgTime} detik, Best Time: ${bestTime ? bestTime + ' detik' : '-'}`;
+        statsDiv.textContent = `📊 Statistics - Total Games: ${totalGames}, Total Attempts: ${totalAttempts}, Avg Attempts: ${avgAttempts}, Avg Time: ${avgTime} detik, Best Time: ${bestTime ? bestTime + ' detik' : '-'}`;
       } else {
         statsDiv.textContent = 'No statistics available.';
       }
