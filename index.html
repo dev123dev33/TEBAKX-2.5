@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tebak Angka v1.8 😎</title>
-  <!-- Google Fonts untuk tampilan modern -->
+  <title>TebakX v1.9 🔥</title>
+  <!-- Google Fonts for modern look -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
@@ -60,6 +60,7 @@
     #guessBtn { background-color: #2575fc; color: #fff; }
     #resetBtn { background-color: #ff9800; color: #fff; }
     #hintBtn { background-color: #4caf50; color: #fff; }
+    #shareBtn { background-color: #9c27b0; color: #fff; }
     .result { font-size: 18px; font-weight: bold; color: #333; margin-bottom: 10px; }
     .guesses, .hint, .feedback, .highscore, .stats { font-size: 16px; margin-bottom: 10px; color: #555; }
     .clear-buttons button { background-color: #e91e63; color: #fff; }
@@ -67,13 +68,14 @@
 </head>
 <body>
   <div class="container">
-    <h1>Tebak Angka v1.8 😎</h1>
-    <p>Saya telah memilih sebuah angka antara 1 dan 100. Coba tebak! 🤔</p>
+    <h1>TebakX v1.9 🔥</h1>
+    <p>Challenge your mind with TebakX! Coba tebak angka yang saya pilih antara 1 dan 100. 🤔</p>
     <input type="number" id="guess" placeholder="Masukkan tebakan">
     <div class="btn-group">
       <button id="guessBtn" onclick="makeGuess()">Tebak</button>
       <button id="resetBtn" onclick="resetGame()" style="display: none;">Reset 🔄</button>
       <button id="hintBtn" onclick="showHint()">Hint 💡</button>
+      <button id="shareBtn" onclick="shareScore()" style="display: none;">Share Score 📤</button>
     </div>
     <div class="result" id="result"></div>
     <div class="guesses" id="guesses"></div>
@@ -92,13 +94,13 @@
     let attempts;
     let guessHistory = [];
     let bestScore;
-    let startTime; // Waktu mulai permainan
+    let startTime; // waktu mulai permainan
 
     function initGame() {
       secretNumber = Math.floor(Math.random() * 100) + 1;
       attempts = 0;
       guessHistory = [];
-      startTime = Date.now(); // Mulai hitung waktu
+      startTime = Date.now();
       document.getElementById('result').textContent = '';
       document.getElementById('guesses').textContent = '';
       document.getElementById('hint').textContent = '';
@@ -107,6 +109,7 @@
       document.getElementById('guessBtn').disabled = false;
       document.getElementById('resetBtn').style.display = 'none';
       document.getElementById('hintBtn').disabled = false;
+      document.getElementById('shareBtn').style.display = 'none';
       document.getElementById('guess').value = '';
       displayHighScore();
       displayGameStats();
@@ -128,7 +131,7 @@
       attempts++;
       guessHistory.push(guess);
 
-      // Memberikan feedback suhu dengan emotikon
+      // Feedback suhu dengan emotikon
       const diff = Math.abs(guess - secretNumber);
       if (guess !== secretNumber) {
         if (diff <= 5) {
@@ -150,12 +153,14 @@
         resultDiv.textContent = 'Terlalu besar! 👆 Coba lagi.';
       } else {
         const endTime = Date.now();
-        const gameDuration = Math.floor((endTime - startTime) / 1000); // Durasi dalam detik
-        resultDiv.textContent = `Selamat! 🎉 Anda berhasil menebak angka ${secretNumber} dalam ${attempts} percobaan dan ${gameDuration} detik.`;
+        const gameDuration = Math.floor((endTime - startTime) / 1000);
+        resultDiv.textContent = `Selamat! 🎉 Tebakannya benar: ${secretNumber} dalam ${attempts} percobaan dan ${gameDuration} detik.`;
         document.getElementById('guess').disabled = true;
         document.getElementById('guessBtn').disabled = true;
         document.getElementById('resetBtn').style.display = 'inline-block';
         document.getElementById('hintBtn').disabled = true;
+        // Tampilkan tombol share score setelah menang
+        document.getElementById('shareBtn').style.display = 'inline-block';
         updateHighScore();
         updateGameStats(gameDuration);
       }
@@ -203,7 +208,7 @@
       displayHighScore();
     }
 
-    // Statistik permainan: total games, total attempts, total time, best time
+    // Statistik permainan: total games, total attempts, total time, dan best time
     function updateGameStats(gameDuration) {
       let totalGames = localStorage.getItem('totalGames');
       let totalAttempts = localStorage.getItem('totalAttempts');
@@ -215,7 +220,6 @@
       localStorage.setItem('totalAttempts', totalAttempts);
       localStorage.setItem('totalTime', totalTime);
 
-      // Update best time (waktu tercepat)
       let bestTime = localStorage.getItem('bestTime');
       if (!bestTime || gameDuration < bestTime) {
         localStorage.setItem('bestTime', gameDuration);
@@ -247,6 +251,21 @@
       localStorage.removeItem('totalTime');
       localStorage.removeItem('bestTime');
       displayGameStats();
+    }
+
+    function shareScore() {
+      const highscore = localStorage.getItem('highScore') || 'N/A';
+      const result = document.getElementById('result').textContent;
+      const shareText = `I scored ${highscore} attempts in TebakX! ${result}`;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(shareText).then(() => {
+          alert("Score copied to clipboard! 📋");
+        }, () => {
+          alert("Failed to copy score.");
+        });
+      } else {
+        alert("Clipboard API not supported.");
+      }
     }
 
     window.onload = initGame;
