@@ -1,8 +1,13 @@
-#🆕 Update TebakX v2.0 🚀🔢
+🎉🔥 UPDATE BESAR! TebakX v2.0 – "Edisi Makin Seru" 🔥🎉
 
-✨ Yang Baru di Versi 2.0:
-✅ Mode Pemilihan Kesulitan: Easy 🟢 | Medium 🔵 | Hard 🔴
-✅ Desain lebih minimalis & modern 🎨
-✅ Algoritma tebak angka lebih akurat 🎯
-✅ UI lebih intuitif & nyaman digunakan 🖥️
-✅ Perbaikan bug & peningkatan performa ⚡
+🚀 FITUR BARU & PERUBAHAN GILA! 🚀
+
+🔢 Tebak Angka Lebih Cepat! Sekarang cukup tekan ENTER buat kirim jawaban, gak perlu klik-klik lagi! Efisiensi level dewa. ⚡⌨️
+
+😂 UI Lebih Fresh & Nyentrik! Tambahin emot biar makin asik! Sekarang main sambil senyum-senyum sendiri. 😆🎨
+
+🐞 Bye-bye Bug! Beberapa kesalahan kecil yang bikin bete udah diusir jauh-jauh. Sekarang game makin smooth! 💨✨
+
+🎯 Siap Uji Keberuntunganmu? Tebak angka, tantang temanmu, dan tunjukkan siapa raja tebak angka sejati! 👑🔥
+
+⬇️ UPDATE SEKARANG dan mainkan TebakX v2.0!
