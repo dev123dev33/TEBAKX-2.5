@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TebakX v1.9 🔥</title>
-  <!-- Google Fonts for modern look -->
+  <title>TebakX v2.0 🔢</title>
+  <!-- Google Fonts untuk tampilan modern -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
@@ -25,7 +25,7 @@
       padding: 25px 30px;
       box-shadow: 0 8px 16px rgba(0,0,0,0.25);
       width: 100%;
-      max-width: 400px;
+      max-width: 450px;
       text-align: center;
       animation: fadeIn 0.5s ease-in-out;
     }
@@ -35,7 +35,7 @@
     }
     h1 { font-size: 1.8em; margin-bottom: 10px; color: #333; }
     p { margin-bottom: 20px; color: #666; }
-    input[type="number"] {
+    select, input[type="number"] {
       width: 100%;
       padding: 12px;
       margin-bottom: 15px;
@@ -44,7 +44,7 @@
       border-radius: 8px;
       transition: border-color 0.3s;
     }
-    input[type="number"]:focus { border-color: #2575fc; outline: none; }
+    select:focus, input[type="number"]:focus { border-color: #2575fc; outline: none; }
     .btn-group { margin-bottom: 15px; }
     button {
       padding: 10px 20px;
@@ -68,8 +68,16 @@
 </head>
 <body>
   <div class="container">
-    <h1>TebakX v1.9 🔥</h1>
-    <p>Challenge your mind with TebakX! Coba tebak angka yang saya pilih antara 1 dan 100. 🤔</p>
+    <h1>TebakX v2.0 🔢</h1>
+    <p>Pilih tingkat kesulitan dan tebak angka yang tersembunyi!</p>
+    
+    <!-- Pemilihan tingkat kesulitan -->
+    <select id="difficulty">
+      <option value="50">Easy (1-50)</option>
+      <option value="100" selected>Medium (1-100)</option>
+      <option value="200">Hard (1-200)</option>
+    </select>
+    
     <input type="number" id="guess" placeholder="Masukkan tebakan">
     <div class="btn-group">
       <button id="guessBtn" onclick="makeGuess()">Tebak</button>
@@ -91,16 +99,20 @@
 
   <script>
     let secretNumber;
+    let maxNumber;
     let attempts;
     let guessHistory = [];
     let bestScore;
     let startTime; // waktu mulai permainan
 
     function initGame() {
-      secretNumber = Math.floor(Math.random() * 100) + 1;
+      // Ambil nilai maksimal dari dropdown tingkat kesulitan
+      maxNumber = Number(document.getElementById('difficulty').value);
+      secretNumber = Math.floor(Math.random() * maxNumber) + 1;
       attempts = 0;
       guessHistory = [];
       startTime = Date.now();
+      
       document.getElementById('result').textContent = '';
       document.getElementById('guesses').textContent = '';
       document.getElementById('hint').textContent = '';
@@ -111,6 +123,7 @@
       document.getElementById('hintBtn').disabled = false;
       document.getElementById('shareBtn').style.display = 'none';
       document.getElementById('guess').value = '';
+      
       displayHighScore();
       displayGameStats();
       console.log("Secret Number (debug):", secretNumber);
@@ -134,11 +147,11 @@
       // Feedback suhu dengan emotikon
       const diff = Math.abs(guess - secretNumber);
       if (guess !== secretNumber) {
-        if (diff <= 5) {
+        if (diff <= Math.ceil(maxNumber * 0.05)) {
           feedbackDiv.textContent = 'Sangat panas! 🔥 Kamu sangat dekat.';
-        } else if (diff <= 10) {
+        } else if (diff <= Math.ceil(maxNumber * 0.1)) {
           feedbackDiv.textContent = 'Hangat! 😊 Coba lagi.';
-        } else if (diff <= 20) {
+        } else if (diff <= Math.ceil(maxNumber * 0.2)) {
           feedbackDiv.textContent = 'Cukup dekat, tapi masih jauh. 😐';
         } else {
           feedbackDiv.textContent = 'Dingin! ❄️ Tebakanmu terlalu jauh.';
@@ -159,7 +172,6 @@
         document.getElementById('guessBtn').disabled = true;
         document.getElementById('resetBtn').style.display = 'inline-block';
         document.getElementById('hintBtn').disabled = true;
-        // Tampilkan tombol share score setelah menang
         document.getElementById('shareBtn').style.display = 'inline-block';
         updateHighScore();
         updateGameStats(gameDuration);
@@ -256,7 +268,7 @@
     function shareScore() {
       const highscore = localStorage.getItem('highScore') || 'N/A';
       const result = document.getElementById('result').textContent;
-      const shareText = `I scored ${highscore} attempts in TebakX! ${result}`;
+      const shareText = `I scored ${highscore} attempts in TebakX v2.0! ${result}`;
       if (navigator.clipboard) {
         navigator.clipboard.writeText(shareText).then(() => {
           alert("Score copied to clipboard! 📋");
@@ -268,6 +280,7 @@
       }
     }
 
+    // Mulai game saat halaman dimuat
     window.onload = initGame;
   </script>
 </body>
