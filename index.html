@@ -21,13 +21,14 @@
     }
     .container {
       background: #fff;
-      border-radius: 12px;
       padding: 25px 30px;
+      border-radius: 12px;
       box-shadow: 0 8px 16px rgba(0,0,0,0.25);
       width: 100%;
       max-width: 450px;
       text-align: center;
       animation: fadeIn 0.5s ease-in-out;
+      margin-bottom: 20px;
     }
     @keyframes fadeIn {
       from { opacity: 0; transform: scale(0.95); }
@@ -35,7 +36,7 @@
     }
     h1 { font-size: 1.8em; margin-bottom: 10px; color: #333; }
     p { margin-bottom: 20px; color: #666; }
-    select, input[type="number"] {
+    input[type="number"] {
       width: 100%;
       padding: 12px;
       margin-bottom: 15px;
@@ -44,8 +45,8 @@
       border-radius: 8px;
       transition: border-color 0.3s;
     }
-    select:focus, input[type="number"]:focus { border-color: #2575fc; outline: none; }
-    .btn-group { margin-bottom: 15px; }
+    input[type="number"]:focus { border-color: #2575fc; outline: none; }
+    .btn-group, .clear-buttons { margin-bottom: 15px; }
     button {
       padding: 10px 20px;
       font-size: 16px;
@@ -53,31 +54,31 @@
       border-radius: 8px;
       cursor: pointer;
       margin: 5px;
+      background-color: #2575fc;
+      color: #fff;
       transition: background-color 0.3s, transform 0.2s;
     }
     button:hover { transform: translateY(-2px); }
     button:disabled { background-color: #ccc; cursor: not-allowed; }
-    #guessBtn { background-color: #2575fc; color: #fff; }
-    #resetBtn { background-color: #ff9800; color: #fff; }
-    #hintBtn { background-color: #4caf50; color: #fff; }
-    #shareBtn { background-color: #9c27b0; color: #fff; }
+    #resetBtn { background-color: #ff9800; }
+    #hintBtn { background-color: #4caf50; }
+    #shareBtn { background-color: #9c27b0; }
     .result { font-size: 18px; font-weight: bold; color: #333; margin-bottom: 10px; }
     .guesses, .hint, .feedback, .highscore, .stats { font-size: 16px; margin-bottom: 10px; color: #555; }
-    .clear-buttons button { background-color: #e91e63; color: #fff; }
+    .clear-buttons button { background-color: #e91e63; }
   </style>
 </head>
 <body>
-  <div class="container">
+  <!-- Menu Utama -->
+  <div id="mainMenu" class="container">
     <h1>TebakX v2.0 🔢</h1>
-    <p>Pilih tingkat kesulitan dan tebak angka yang tersembunyi!</p>
-    
-    <!-- Pemilihan tingkat kesulitan -->
-    <select id="difficulty">
-      <option value="50">Easy (1-50)</option>
-      <option value="100" selected>Medium (1-100)</option>
-      <option value="200">Hard (1-200)</option>
-    </select>
-    
+    <p>Selamat datang di TebakX! Siap uji instingmu dengan tantangan tebak angka? 🚀</p>
+    <button onclick="goToGame()">Mulai Game 🚀</button>
+  </div>
+
+  <!-- Area Permainan (disembunyikan saat awal) -->
+  <div id="gameArea" class="container" style="display: none;">
+    <p>Tebak angka antara 1 dan 100!</p>
     <input type="number" id="guess" placeholder="Masukkan tebakan">
     <div class="btn-group">
       <button id="guessBtn" onclick="makeGuess()">Tebak</button>
@@ -99,15 +100,19 @@
 
   <script>
     let secretNumber;
-    let maxNumber;
+    const maxNumber = 100; // Rentang angka tetap: 1 - 100
     let attempts;
     let guessHistory = [];
     let bestScore;
     let startTime; // waktu mulai permainan
 
-    function initGame() {
-      // Ambil nilai maksimal dari dropdown tingkat kesulitan
-      maxNumber = Number(document.getElementById('difficulty').value);
+    function goToGame() {
+      document.getElementById('mainMenu').style.display = 'none';
+      document.getElementById('gameArea').style.display = 'block';
+      startGame();
+    }
+
+    function startGame() {
       secretNumber = Math.floor(Math.random() * maxNumber) + 1;
       attempts = 0;
       guessHistory = [];
@@ -194,7 +199,7 @@
     }
 
     function resetGame() {
-      initGame();
+      startGame();
     }
 
     function updateHighScore() {
@@ -220,7 +225,6 @@
       displayHighScore();
     }
 
-    // Statistik permainan: total games, total attempts, total time, dan best time
     function updateGameStats(gameDuration) {
       let totalGames = localStorage.getItem('totalGames');
       let totalAttempts = localStorage.getItem('totalAttempts');
@@ -280,8 +284,12 @@
       }
     }
 
-    // Mulai game saat halaman dimuat
-    window.onload = initGame;
+    // Mulai game saat halaman dimuat (opsional)
+    window.onload = function() {
+      // Tampilkan menu utama
+      document.getElementById('mainMenu').style.display = 'block';
+      document.getElementById('gameArea').style.display = 'none';
+    };
   </script>
 </body>
 </html>
