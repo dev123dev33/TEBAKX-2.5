@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TebakX v2.1 🔢</title>
+  <title>TebakX v2.2 🔢</title>
   <!-- Google Fonts untuk tampilan modern -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -64,9 +64,9 @@
     #hintBtn { background-color: #4caf50; }
     #shareBtn { background-color: #9c27b0; }
     .result { font-size: 18px; font-weight: bold; color: #333; margin-bottom: 10px; }
-    .guesses, .hint, .feedback, .highscore, .stats { font-size: 16px; margin-bottom: 10px; color: #555; }
+    .guesses, .hint, .feedback, .highscore, .stats, .credits { font-size: 16px; margin-bottom: 10px; color: #555; }
     .clear-buttons button { background-color: #e91e63; }
-    
+
     /* Confetti Styles */
     .confetti-container {
       position: fixed;
@@ -96,8 +96,8 @@
 <body>
   <!-- Menu Utama -->
   <div id="mainMenu" class="container">
-    <h1>TebakX v2.1 🔢</h1>
-    <p>Selamat datang di TebakX! Siap uji instingmu dengan tantangan tebak angka? 🚀</p>
+    <h1>TebakX v2.2 🔢</h1>
+    <p>Selamat datang di TebakX! Siap uji instingmu dalam tantangan tebak angka? 🚀</p>
     <button onclick="goToGame()">Mulai Game 🚀</button>
   </div>
 
@@ -121,7 +121,12 @@
       <button id="clearScoreBtn" onclick="clearHighScore()">Clear High Score 🗑️</button>
       <button id="clearStatsBtn" onclick="clearGameStats()">Reset Statistics 🗑️</button>
     </div>
+    <div class="credits">
+      <p>Credits: <strong>NEXGEN GAME</strong></p>
+    </div>
   </div>
+
+  <div id="confettiContainer" class="confetti-container"></div>
 
   <script>
     let secretNumber;
@@ -297,7 +302,7 @@
     function shareScore() {
       const highscore = localStorage.getItem('highScore') || 'N/A';
       const result = document.getElementById('result').textContent;
-      const shareText = `I scored ${highscore} attempts in TebakX v2.1! ${result}`;
+      const shareText = `I scored ${highscore} attempts in TebakX v2.2! ${result}`;
       if (navigator.clipboard) {
         navigator.clipboard.writeText(shareText).then(() => {
           alert("Score copied to clipboard! 📋");
@@ -315,26 +320,6 @@
         makeGuess();
       }
     });
-
-    // Fungsi untuk menampilkan confetti saat menang
-    function showConfetti() {
-      const confettiContainer = document.createElement('div');
-      confettiContainer.className = 'confetti-container';
-      document.body.appendChild(confettiContainer);
-      for (let i = 0; i < 30; i++) {
-        const confetti = document.createElement('div');
-        confetti.className = 'confetti';
-        const colors = ['#FFC107', '#FF5722', '#8BC34A', '#00BCD4', '#E91E63'];
-        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        confetti.style.left = Math.random() * 100 + 'vw';
-        confetti.style.animationDelay = Math.random() * 3 + 's';
-        confettiContainer.appendChild(confetti);
-      }
-      // Hapus confetti setelah 5 detik
-      setTimeout(() => {
-        confettiContainer.remove();
-      }, 5000);
-    }
 
     // Tampilkan menu utama saat halaman dimuat
     window.onload = function() {
