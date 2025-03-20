@@ -3,133 +3,394 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TebakX v2.3 - Verifikasi & Game</title>
+  <title>TebakX v2.3 🔢</title>
+  <!-- Google Fonts untuk tampilan modern -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    /* Reset dan styling dasar */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: #1e1e2e;
-      font-family: Arial, sans-serif;
-      color: #fff;
-      margin: 0;
-      padding: 0;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      padding: 20px;
     }
-
     .container {
-      background: #282a36;
-      padding: 20px 30px;
+      background: #fff;
+      padding: 25px 30px;
       border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+      width: 100%;
+      max-width: 450px;
       text-align: center;
-      width: 90%;
-      max-width: 400px;
-      transition: transform 0.5s ease-in-out;
+      animation: fadeIn 0.5s ease-in-out;
+      margin-bottom: 20px;
     }
-
-    h1 {
-      margin-bottom: 15px;
-      font-size: 26px;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
     }
-
-    label {
-      display: block;
-      margin: 10px 0 5px;
-      font-size: 14px;
-    }
-
-    input[type="text"] {
+    h1 { font-size: 1.8em; margin-bottom: 10px; color: #333; }
+    p { margin-bottom: 20px; color: #666; }
+    input[type="number"], input[type="text"] {
       width: 100%;
       padding: 12px;
-      border: none;
-      border-radius: 6px;
       margin-bottom: 15px;
       font-size: 16px;
-      background: #44475a;
-      color: #fff;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      transition: border-color 0.3s;
     }
-
+    input[type="number"]:focus, input[type="text"]:focus { border-color: #2575fc; outline: none; }
+    .btn-group, .clear-buttons { margin-bottom: 15px; }
     button {
-      padding: 12px 20px;
-      background: #50fa7b;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
+      padding: 10px 20px;
       font-size: 16px;
-      transition: background 0.3s ease;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 5px;
+      background-color: #2575fc;
+      color: #fff;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+    button:hover { transform: translateY(-2px); }
+    button:disabled { background-color: #ccc; cursor: not-allowed; }
+    #resetBtn { background-color: #ff9800; }
+    #hintBtn { background-color: #4caf50; }
+    #shareBtn { background-color: #9c27b0; }
+    .result { font-size: 18px; font-weight: bold; color: #333; margin-bottom: 10px; }
+    .guesses, .hint, .feedback, .highscore, .stats, .credits { font-size: 16px; margin-bottom: 10px; color: #555; }
+    .clear-buttons button { background-color: #e91e63; }
+
+    /* Confetti Styles */
+    .confetti-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 0;
+      pointer-events: none;
+      overflow: visible;
+      z-index: 1000;
+    }
+    .confetti {
+      position: absolute;
+      top: -10px;
+      width: 8px;
+      height: 8px;
+      opacity: 0.8;
+      transform: rotate(0deg);
+      animation: confetti-fall 5s linear infinite;
+    }
+    @keyframes confetti-fall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
     }
 
-    button:hover {
-      background: #45e36d;
-    }
-
-    #result {
-      margin-top: 20px;
-      font-size: 18px;
-      font-weight: bold;
-      opacity: 0;
-      transition: opacity 0.5s ease-in-out;
-    }
-
-    #gameContainer {
-      display: none;
-      width: 100vw;
-      height: 100vh;
-    }
-
-    iframe {
+    /* Modal verifikasi */
+    .modal {
+      position: fixed;
+      top: 0; left: 0;
       width: 100%;
       height: 100%;
-      border: none;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+    .modal-content {
+      background: #fff;
+      padding: 20px 30px;
+      border-radius: 8px;
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
     }
   </style>
 </head>
 <body>
-
-  <!-- Halaman Verifikasi -->
-  <div id="verifyContainer" class="container">
-    <h1>Verifikasi TebakX v2.3</h1>
-    <p>Ketik "SAXZ FIX" untuk memulai game:</p>
-    <form id="verifyForm">
-      <label for="code">Kode Verifikasi:</label>
-      <input type="text" id="code" name="code" required>
-      
-      <button type="submit">Submit</button>
-    </form>
-    <div id="result"></div>
+  <!-- Menu Utama -->
+  <div id="mainMenu" class="container">
+    <h1>TebakX v2.3 🔢</h1>
+    <p>Selamat datang di TebakX! Siap uji instingmu dalam tantangan tebak angka? 🚀</p>
+    <button onclick="showVerification()">Mulai Game 🚀</button>
   </div>
 
-  <!-- Halaman Game -->
-  <div id="gameContainer">
-    <iframe src="https://dev123dev33.github.io/TEBAKX-2.2/"></iframe>
+  <!-- Modal Verifikasi -->
+  <div id="verificationModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <h2>Verifikasi</h2>
+      <p>Masukkan kode verifikasi: <strong>zaS nEON</strong></p>
+      <input type="text" id="verificationInput" placeholder="Ketik kode verifikasi">
+      <button onclick="verifyUser()">Verifikasi</button>
+    </div>
   </div>
+
+  <!-- Area Permainan (disembunyikan saat awal) -->
+  <div id="gameArea" class="container" style="display: none;">
+    <p>Tebak angka antara 1 dan 100!</p>
+    <input type="number" id="guess" placeholder="Masukkan tebakan">
+    <div class="btn-group">
+      <button id="guessBtn" onclick="makeGuess()">Tebak</button>
+      <button id="resetBtn" onclick="resetGame()" style="display: none;">Reset 🔄</button>
+      <button id="hintBtn" onclick="showHint()">Hint 💡</button>
+      <button id="shareBtn" onclick="shareScore()" style="display: none;">Share Score 📤</button>
+    </div>
+    <div class="result" id="result"></div>
+    <div class="guesses" id="guesses"></div>
+    <div class="hint" id="hint"></div>
+    <div class="feedback" id="feedback"></div>
+    <div class="highscore" id="highscore"></div>
+    <div class="stats" id="stats"></div>
+    <div class="clear-buttons">
+      <button id="clearScoreBtn" onclick="clearHighScore()">Clear High Score 🗑️</button>
+      <button id="clearStatsBtn" onclick="clearGameStats()">Reset Statistics 🗑️</button>
+    </div>
+    <div class="credits">
+      <p>Credits: <strong>NEXGEN GAME</strong></p>
+    </div>
+  </div>
+
+  <div id="confettiContainer" class="confetti-container"></div>
 
   <script>
-    document.getElementById('verifyForm').addEventListener('submit', function(e) {
-      e.preventDefault();
+    let secretNumber;
+    const maxNumber = 100; // Rentang angka: 1 - 100
+    let attempts;
+    let guessHistory = [];
+    let bestScore;
+    let startTime; // waktu mulai permainan
 
-      let inputCode = document.getElementById('code').value.trim().toUpperCase();
-      let resultDiv = document.getElementById('result');
-      resultDiv.style.opacity = "1";
+    // Tampilkan modal verifikasi
+    function showVerification() {
+      document.getElementById('verificationModal').style.display = 'flex';
+    }
 
-      if (inputCode === "SAXZ FIX") {
-        resultDiv.textContent = "✅ Verifikasi berhasil! Mengarahkan ke game...";
-        resultDiv.style.color = "#50fa7b";
-
-        document.querySelector('.container').style.transform = "scale(0.9)";
-
-        setTimeout(() => {
-          document.getElementById('verifyContainer').style.display = "none";
-          document.getElementById('gameContainer').style.display = "block";
-        }, 2000);
+    // Fungsi verifikasi user (harus memasukkan "zaS nEON")
+    function verifyUser() {
+      const userInput = document.getElementById('verificationInput').value.trim();
+      if (userInput === "zaS nEON") {
+        document.getElementById('verificationModal').style.display = 'none';
+        goToGame();
       } else {
-        resultDiv.textContent = "❌ Kode salah! Coba lagi.";
-        resultDiv.style.color = "#ff5555";
+        alert("Kode verifikasi salah! ❌");
+      }
+    }
+
+    function goToGame() {
+      document.getElementById('mainMenu').style.display = 'none';
+      document.getElementById('gameArea').style.display = 'block';
+      startGame();
+    }
+
+    function startGame() {
+      secretNumber = Math.floor(Math.random() * maxNumber) + 1;
+      attempts = 0;
+      guessHistory = [];
+      startTime = Date.now();
+      
+      document.getElementById('result').textContent = '';
+      document.getElementById('guesses').textContent = '';
+      document.getElementById('hint').textContent = '';
+      document.getElementById('feedback').textContent = '';
+      document.getElementById('guess').disabled = false;
+      document.getElementById('guessBtn').disabled = false;
+      document.getElementById('resetBtn').style.display = 'none';
+      document.getElementById('hintBtn').disabled = false;
+      document.getElementById('shareBtn').style.display = 'none';
+      document.getElementById('guess').value = '';
+      
+      displayHighScore();
+      displayGameStats();
+      console.log("Secret Number (debug):", secretNumber);
+    }
+
+    function makeGuess() {
+      const guessInput = document.getElementById('guess');
+      const resultDiv = document.getElementById('result');
+      const guessesDiv = document.getElementById('guesses');
+      const feedbackDiv = document.getElementById('feedback');
+      const guess = Number(guessInput.value);
+
+      if (!guess && guess !== 0) {
+        resultDiv.textContent = 'Masukkan angka yang valid! ❌';
+        return;
+      }
+
+      attempts++;
+      guessHistory.push(guess);
+
+      const diff = Math.abs(guess - secretNumber);
+      if (guess !== secretNumber) {
+        if (diff <= Math.ceil(maxNumber * 0.05)) {
+          feedbackDiv.textContent = 'Sangat panas! 🔥 Kamu sangat dekat.';
+        } else if (diff <= Math.ceil(maxNumber * 0.1)) {
+          feedbackDiv.textContent = 'Hangat! 😊 Coba lagi.';
+        } else if (diff <= Math.ceil(maxNumber * 0.2)) {
+          feedbackDiv.textContent = 'Cukup dekat, tapi masih jauh. 😐';
+        } else {
+          feedbackDiv.textContent = 'Dingin! ❄️ Tebakanmu terlalu jauh.';
+        }
+      } else {
+        feedbackDiv.textContent = '';
+      }
+
+      if (guess < secretNumber) {
+        resultDiv.textContent = 'Terlalu kecil! 👇 Coba lagi.';
+      } else if (guess > secretNumber) {
+        resultDiv.textContent = 'Terlalu besar! 👆 Coba lagi.';
+      } else {
+        const endTime = Date.now();
+        const gameDuration = Math.floor((endTime - startTime) / 1000);
+        resultDiv.textContent = `Selamat! 🎉 Tebakannya benar: ${secretNumber} dalam ${attempts} percobaan dan ${gameDuration} detik.`;
+        document.getElementById('guess').disabled = true;
+        document.getElementById('guessBtn').disabled = true;
+        document.getElementById('resetBtn').style.display = 'inline-block';
+        document.getElementById('hintBtn').disabled = true;
+        document.getElementById('shareBtn').style.display = 'inline-block';
+        updateHighScore();
+        updateGameStats(gameDuration);
+        showConfetti();
+      }
+      guessesDiv.textContent = 'Tebakan Anda: ' + guessHistory.join(', ');
+      guessInput.value = '';
+      guessInput.focus();
+    }
+
+    function showHint() {
+      const hintDiv = document.getElementById('hint');
+      if (attempts >= 3) {
+        hintDiv.textContent = secretNumber % 2 === 0 
+          ? 'Hint: Angka rahasia adalah genap. ➕'
+          : 'Hint: Angka rahasia adalah ganjil. ➖';
+        document.getElementById('hintBtn').disabled = true;
+      } else {
+        hintDiv.textContent = 'Cobalah beberapa tebakan terlebih dahulu untuk mendapatkan hint! 🤔';
+      }
+    }
+
+    function resetGame() {
+      startGame();
+    }
+
+    function updateHighScore() {
+      bestScore = localStorage.getItem('highScore');
+      if (!bestScore || attempts < bestScore) {
+        localStorage.setItem('highScore', attempts);
+      }
+      displayHighScore();
+    }
+
+    function displayHighScore() {
+      bestScore = localStorage.getItem('highScore');
+      const highscoreDiv = document.getElementById('highscore');
+      if (bestScore) {
+        highscoreDiv.textContent = 'Best Score: ' + bestScore + ' percobaan 🏆';
+      } else {
+        highscoreDiv.textContent = 'Belum ada Best Score.';
+      }
+    }
+
+    function clearHighScore() {
+      localStorage.removeItem('highScore');
+      displayHighScore();
+    }
+
+    function updateGameStats(gameDuration) {
+      let totalGames = localStorage.getItem('totalGames');
+      let totalAttempts = localStorage.getItem('totalAttempts');
+      let totalTime = localStorage.getItem('totalTime');
+      totalGames = totalGames ? Number(totalGames) + 1 : 1;
+      totalAttempts = totalAttempts ? Number(totalAttempts) + attempts : attempts;
+      totalTime = totalTime ? Number(totalTime) + gameDuration : gameDuration;
+      localStorage.setItem('totalGames', totalGames);
+      localStorage.setItem('totalAttempts', totalAttempts);
+      localStorage.setItem('totalTime', totalTime);
+
+      let bestTime = localStorage.getItem('bestTime');
+      if (!bestTime || gameDuration < bestTime) {
+        localStorage.setItem('bestTime', gameDuration);
+      }
+      displayGameStats();
+    }
+
+    function displayGameStats() {
+      const statsDiv = document.getElementById('stats');
+      let totalGames = localStorage.getItem('totalGames');
+      let totalAttempts = localStorage.getItem('totalAttempts');
+      let totalTime = localStorage.getItem('totalTime');
+      let bestTime = localStorage.getItem('bestTime');
+      if (totalGames && totalAttempts && totalTime) {
+        totalGames = Number(totalGames);
+        totalAttempts = Number(totalAttempts);
+        totalTime = Number(totalTime);
+        const avgAttempts = (totalAttempts / totalGames).toFixed(2);
+        const avgTime = (totalTime / totalGames).toFixed(2);
+        statsDiv.textContent = `📊 Statistics - Total Games: ${totalGames}, Total Attempts: ${totalAttempts}, Avg Attempts: ${avgAttempts}, Avg Time: ${avgTime} detik, Best Time: ${bestTime ? bestTime + ' detik' : '-'}`;
+      } else {
+        statsDiv.textContent = 'No statistics available.';
+      }
+    }
+
+    function clearGameStats() {
+      localStorage.removeItem('totalGames');
+      localStorage.removeItem('totalAttempts');
+      localStorage.removeItem('totalTime');
+      localStorage.removeItem('bestTime');
+      displayGameStats();
+    }
+
+    function shareScore() {
+      const highscore = localStorage.getItem('highScore') || 'N/A';
+      const result = document.getElementById('result').textContent;
+      const shareText = `I scored ${highscore} attempts in TebakX v2.3! ${result}`;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(shareText).then(() => {
+          alert("Score copied to clipboard! 📋");
+        }, () => {
+          alert("Failed to copy score.");
+        });
+      } else {
+        alert("Clipboard API not supported.");
+      }
+    }
+
+    // Tambahkan event listener agar tombol Enter pada input tebakan memicu makeGuess()
+    document.getElementById('guess').addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') {
+        makeGuess();
       }
     });
-  </script>
 
+    // Tampilkan menu utama saat halaman dimuat
+    window.onload = function() {
+      document.getElementById('mainMenu').style.display = 'block';
+      document.getElementById('gameArea').style.display = 'none';
+    };
+
+    // Fungsi untuk menampilkan confetti saat menang
+    function showConfetti() {
+      const confettiContainer = document.getElementById('confettiContainer');
+      for (let i = 0; i < 30; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        const colors = ['#FFC107', '#FF5722', '#8BC34A', '#00BCD4', '#E91E63'];
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.animationDelay = Math.random() * 3 + 's';
+        confettiContainer.appendChild(confetti);
+      }
+      // Hapus confetti setelah 5 detik
+      setTimeout(() => {
+        confettiContainer.innerHTML = '';
+      }, 5000);
+    }
+  </script>
 </body>
 </html>
