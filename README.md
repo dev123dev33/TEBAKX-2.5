@@ -1,12 +1,12 @@
 
-🆕 TebakX v2.2 - Update Terbaru! 🎉
+🆕🔷 TebakX v2.3 Update! 🔷
 
-✨ Apa yang Baru?
+✨ Perubahan di versi ini:
+✅ Sistem Verifikasi Bot (zaS nEON) 🤖 – Pastikan kamu manusia sebelum bermain!
+✅ Optimisasi performa – Game lebih ringan & cepat 🚀
+✅ Pembersihan bug – Pengalaman bermain lebih mulus 🛠️
 
-Credits Special 🙌: Kini game ini resmi dipersembahkan oleh NEXGEN GAME!
-Optimasi Performa & Bug Fixes 🚀: Kami telah melakukan penyempurnaan kode untuk mempercepat loading, meningkatkan responsivitas, serta memperbaiki bug-bug kecil agar pengalaman bermainmu semakin mulus.
-Penyempurnaan UI & Fitur Tambahan: Antarmuka telah disempurnakan agar lebih intuitif dan profesional, memberikan tampilan yang makin ciamik!
-Ayo, update TebakX v2.2 sekarang dan rasakan pengalaman bermain yang lebih optimal dan stylish! 🔢🔥
-🚀 Note Update:
-Update game terbaru akan muncul otomatis di ITCH.IO dan GitHub! Biasanya, perubahan sudah terlihat setelah beberapa menit. Jika belum, coba tekan Ctrl+F5 atau refresh lagi nanti.
-Terima kasih atas kesabaran dan dukungan kalian! 😊✨
+🔥 Update tersedia di versi GitHub & browser terlebih dahulu, kemudian rilis di Itch.io dalam beberapa menit!
+
+🎮 Powered by NEXGEN GAME 🎮
+
