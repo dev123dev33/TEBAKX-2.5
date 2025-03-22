@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TebakX v2.3 🔢</title>
-  <!-- Google Fonts untuk tampilan modern -->
+  <title>TebakX v2.5 🔢</title>
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* Reset dan styling dasar */
+    /* Reset & Styling Dasar */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Roboto', sans-serif;
@@ -64,7 +64,7 @@
     #hintBtn { background-color: #4caf50; }
     #shareBtn { background-color: #9c27b0; }
     .result { font-size: 18px; font-weight: bold; color: #333; margin-bottom: 10px; }
-    .guesses, .hint, .feedback, .highscore, .stats, .credits { font-size: 16px; margin-bottom: 10px; color: #555; }
+    .guesses, .hint, .feedback, .highscore, .stats, .credits, .coinDisplay { font-size: 16px; margin-bottom: 10px; color: #555; }
     .clear-buttons button { background-color: #e91e63; }
 
     /* Confetti Styles */
@@ -92,13 +92,13 @@
       100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
     }
 
-    /* Modal verifikasi */
+    /* Modal Verifikasi */
     .modal {
       position: fixed;
       top: 0; left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.5);
+      background: rgba(0,0,0,0.6);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -117,22 +117,26 @@
 <body>
   <!-- Menu Utama -->
   <div id="mainMenu" class="container">
-    <h1>TebakX v2.3 🔢</h1>
-    <p>Selamat datang di TebakX! Siap uji instingmu dalam tantangan tebak angka? 🚀</p>
+    <h1>TebakX v2.5 🔢</h1>
+    <p>Selamat datang di TebakX! Uji instingmu dalam tantangan tebak angka! 🚀</p>
     <button onclick="showVerification()">Mulai Game 🚀</button>
+    <div class="coinDisplay" id="coinDisplay">Koin: 0</div>
+    <div class="credits">
+      <p>Credits: <strong>NEXGEN GAME</strong></p>
+    </div>
   </div>
 
   <!-- Modal Verifikasi -->
   <div id="verificationModal" class="modal" style="display: none;">
-    <div class="modal-content">
+    <div class="modal-content" id="verificationModalContent">
       <h2>Verifikasi</h2>
-      <p>Masukkan kode verifikasi: <strong>zaS nEON</strong></p>
+      <p>Masukkan kode verifikasi: <strong>zaS nEON v1.1</strong></p>
       <input type="text" id="verificationInput" placeholder="Ketik kode verifikasi">
       <button onclick="verifyUser()">Verifikasi</button>
     </div>
   </div>
 
-  <!-- Area Permainan (disembunyikan saat awal) -->
+  <!-- Area Permainan -->
   <div id="gameArea" class="container" style="display: none;">
     <p>Tebak angka antara 1 dan 100!</p>
     <input type="number" id="guess" placeholder="Masukkan tebakan">
@@ -166,20 +170,61 @@
     let guessHistory = [];
     let bestScore;
     let startTime; // waktu mulai permainan
+    let coins = Number(localStorage.getItem('coins')) || 0;
+    
+    // Variabel untuk verifikasi tambahan
+    let mouseMoveCount = 0;
+    let typingStartTime = null;
+    let typingEndTime = null;
+
+    // Update tampilan koin
+    function updateCoinDisplay() {
+      document.getElementById('coinDisplay').textContent = 'Koin: ' + coins;
+      localStorage.setItem('coins', coins);
+    }
+
+    // Tambahkan event listener pada modal verifikasi untuk merekam gerakan mouse
+    document.getElementById('verificationModalContent').addEventListener('mousemove', function() {
+      mouseMoveCount++;
+    });
+
+    // Rekam waktu mulai pengetikan
+    document.getElementById('verificationInput').addEventListener('keydown', function(event) {
+      if (!typingStartTime) {
+        typingStartTime = Date.now();
+      }
+      // Jika Enter ditekan, tetapkan waktu akhir pengetikan
+      if (event.key === 'Enter') {
+        typingEndTime = Date.now();
+      }
+    });
 
     // Tampilkan modal verifikasi
     function showVerification() {
+      // Reset data verifikasi
+      mouseMoveCount = 0;
+      typingStartTime = null;
+      typingEndTime = null;
+      document.getElementById('verificationInput').value = '';
       document.getElementById('verificationModal').style.display = 'flex';
     }
 
-    // Fungsi verifikasi user (harus memasukkan "zaS nEON")
+    // Fungsi verifikasi yang lebih ketat
     function verifyUser() {
       const userInput = document.getElementById('verificationInput').value.trim();
-      if (userInput === "zaS nEON") {
+      const codeValid = (userInput === "zaS nEON v1.1"); // Case-sensitive
+      const typingDuration = typingEndTime ? (typingEndTime - typingStartTime) : 0;
+      
+      // Syarat: Kode harus benar, pengguna harus melakukan minimal 5 gerakan mouse, dan waktu pengetikan minimal 3000ms
+      if (codeValid && mouseMoveCount >= 5 && typingDuration >= 3000) {
         document.getElementById('verificationModal').style.display = 'none';
         goToGame();
       } else {
-        alert("Kode verifikasi salah! ❌");
+        let errorMsg = "Verifikasi gagal! ❌\\n";
+        if (!codeValid) errorMsg += "- Kode verifikasi salah.\\n";
+        if (mouseMoveCount < 5) errorMsg += `- Gerakan mouse tidak cukup (${mouseMoveCount}/5).\\n`;
+        if (typingDuration < 3000) errorMsg += `- Kecepatan pengetikan terlalu cepat (${typingDuration}ms).\\n`;
+        alert(errorMsg);
       }
     }
 
@@ -206,8 +251,9 @@
       document.getElementById('shareBtn').style.display = 'none';
       document.getElementById('guess').value = '';
       
-      displayHighScore();
+      updateHighScore();
       displayGameStats();
+      updateCoinDisplay();
       console.log("Secret Number (debug):", secretNumber);
     }
 
@@ -256,6 +302,11 @@
         document.getElementById('shareBtn').style.display = 'inline-block';
         updateHighScore();
         updateGameStats(gameDuration);
+        // Hitung koin: Semakin cepat selesai, semakin banyak koin (maks 50)
+        let earnedCoins = Math.max(0, 50 - gameDuration);
+        coins += earnedCoins;
+        alert(`Selamat! Kamu mendapatkan ${earnedCoins} koin! 💰`);
+        updateCoinDisplay();
         showConfetti();
       }
       guessesDiv.textContent = 'Tebakan Anda: ' + guessHistory.join(', ');
@@ -349,7 +400,7 @@
     function shareScore() {
       const highscore = localStorage.getItem('highScore') || 'N/A';
       const result = document.getElementById('result').textContent;
-      const shareText = `I scored ${highscore} attempts in TebakX v2.3! ${result}`;
+      const shareText = `I scored ${highscore} attempts in TebakX v2.4! ${result}`;
       if (navigator.clipboard) {
         navigator.clipboard.writeText(shareText).then(() => {
           alert("Score copied to clipboard! 📋");
@@ -361,7 +412,7 @@
       }
     }
 
-    // Tambahkan event listener agar tombol Enter pada input tebakan memicu makeGuess()
+    // Tampilkan event listener untuk tombol Enter pada input tebakan
     document.getElementById('guess').addEventListener('keydown', function(event) {
       if (event.key === 'Enter') {
         makeGuess();
@@ -386,10 +437,7 @@
         confetti.style.animationDelay = Math.random() * 3 + 's';
         confettiContainer.appendChild(confetti);
       }
-      // Hapus confetti setelah 5 detik
-      setTimeout(() => {
-        confettiContainer.innerHTML = '';
-      }, 5000);
+      setTimeout(() => { confettiContainer.innerHTML = ''; }, 5000);
     }
   </script>
 </body>
