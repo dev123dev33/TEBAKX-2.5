@@ -1,16 +1,11 @@
 
-🆕🆕 TebakX Versi 2.5!
+🛠 **TebakX v2.5 Update** 🎉  
 
-✨ Perubahan & Perbaikan:
-✅ Optimisasi Performa – Game kini lebih ringan dan responsif!
-🐞 Pembersihan Bug – Banyak bug telah diperbaiki untuk pengalaman bermain yang lebih baik.
-🔒 Sistem Verifikasi Super Ketat – Keamanan akun semakin diperkuat!
-🪙 Fitur Koin Baru! – Kumpulkan koin untuk have fun dan nikmati pengalaman lebih seru!
+✅ **Perbaikan Bug & Peningkatan!**  
+- 🛠 Bug "Mulai Game" diperbaiki berkat masukan kalian!  
+- 🎊 Animasi confetti lebih smooth & keren!  
+- 🔄 Optimasi logika tebakan & koin.  
+- 📊 Statistik permainan lebih lengkap!  
 
-❗ Mohon Maaf:
-Versi 2.4 tidak dirilis karena terjadi error. Kami menghargai kesabaran kalian dan telah memastikan versi 2.5 lebih stabil dan optimal.
-
-🔥 Update sekarang dan nikmati pengalaman bermain yang lebih baik! 🚀
-
-
-
+Terima kasih atas masukan kalian! 🤝 Selamat bermain! 🎮🔥  
+— Tim **NEXGEN GAME** 🚀
