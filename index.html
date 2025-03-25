@@ -119,8 +119,8 @@
   <div id="mainMenu" class="container">
     <h1>TebakX v2.5 🔢</h1>
     <p>Selamat datang di TebakX! Uji instingmu dalam tantangan tebak angka! 🚀</p>
-    <!-- Pemanggilan fungsi langsung ke goToGame() -->
-    <button onclick="goToGame()">Mulai Game 🚀</button>
+    <!-- Memanggil fungsi showVerification yang sudah didefinisikan -->
+    <button onclick="showVerification()">Mulai Game 🚀</button>
     <div class="coinDisplay" id="coinDisplay">Koin: 0</div>
     <div class="credits">
       <p>Credits: <strong>NEXGEN GAME</strong></p>
@@ -169,22 +169,18 @@
       localStorage.setItem('coins', coins);
     }
 
+    // Fungsi verifikasi (jika diperlukan) dan lanjut ke game
+    function showVerification() {
+      // Logika verifikasi bisa ditambahkan di sini
+      goToGame();
+    }
+
     // Fungsi untuk pindah ke area permainan
     function goToGame() {
       document.getElementById('mainMenu').style.display = 'none';
       document.getElementById('gameArea').style.display = 'block';
       startGame();
     }
-
-    // Jika Anda ingin menambahkan verifikasi terlebih dahulu, Anda bisa mengubah fungsi ini:
-    /*
-    function showVerification() {
-      function showVerification() {
-    console.log("Verifikasi ditampilkan!");
-}
-
-    }
-    */
 
     function startGame() {
       secretNumber = Math.floor(Math.random() * maxNumber) + 1;
