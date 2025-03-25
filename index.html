@@ -126,15 +126,7 @@
     </div>
   </div>
 
-  <!-- Modal Verifikasi -->
-  <div id="verificationModal" class="modal" style="display: none;">
-    <div class="modal-content" id="verificationModalContent">
-      <h2>Verifikasi</h2>
-      <p>Masukkan kode verifikasi: <strong>zaS nEON v1.1</strong></p>
-      <input type="text" id="verificationInput" placeholder="Ketik kode verifikasi">
-      <button onclick="verifyUser()">Verifikasi</button>
-    </div>
-  </div>
+ 
 
   <!-- Area Permainan -->
   <div id="gameArea" class="container" style="display: none;">
@@ -172,10 +164,7 @@
     let startTime; // waktu mulai permainan
     let coins = Number(localStorage.getItem('coins')) || 0;
     
-    // Variabel untuk verifikasi tambahan
-    let mouseMoveCount = 0;
-    let typingStartTime = null;
-    let typingEndTime = null;
+   
 
     // Update tampilan koin
     function updateCoinDisplay() {
@@ -183,51 +172,7 @@
       localStorage.setItem('coins', coins);
     }
 
-    // Tambahkan event listener pada modal verifikasi untuk merekam gerakan mouse
-    document.getElementById('verificationModalContent').addEventListener('mousemove', function() {
-      mouseMoveCount++;
-    });
-
-    // Rekam waktu mulai pengetikan
-    document.getElementById('verificationInput').addEventListener('keydown', function(event) {
-      if (!typingStartTime) {
-        typingStartTime = Date.now();
-      }
-      // Jika Enter ditekan, tetapkan waktu akhir pengetikan
-      if (event.key === 'Enter') {
-        typingEndTime = Date.now();
-      }
-    });
-
-    // Tampilkan modal verifikasi
-    function showVerification() {
-      // Reset data verifikasi
-      mouseMoveCount = 0;
-      typingStartTime = null;
-      typingEndTime = null;
-      document.getElementById('verificationInput').value = '';
-      document.getElementById('verificationModal').style.display = 'flex';
-    }
-
-    // Fungsi verifikasi yang lebih ketat
-    function verifyUser() {
-      const userInput = document.getElementById('verificationInput').value.trim();
-      const codeValid = (userInput === "zaS nEON v1.1"); // Case-sensitive
-      const typingDuration = typingEndTime ? (typingEndTime - typingStartTime) : 0;
-      
-      // Syarat: Kode harus benar, pengguna harus melakukan minimal 5 gerakan mouse, dan waktu pengetikan minimal 3000ms
-      if (codeValid && mouseMoveCount >= 5 && typingDuration >= 3000) {
-        document.getElementById('verificationModal').style.display = 'none';
-        goToGame();
-      } else {
-        let errorMsg = "Verifikasi gagal! ❌\\n";
-        if (!codeValid) errorMsg += "- Kode verifikasi salah.\\n";
-        if (mouseMoveCount < 5) errorMsg += `- Gerakan mouse tidak cukup (${mouseMoveCount}/5).\\n`;
-        if (typingDuration < 3000) errorMsg += `- Kecepatan pengetikan terlalu cepat (${typingDuration}ms).\\n`;
-        alert(errorMsg);
-      }
-    }
-
+    /
     function goToGame() {
       document.getElementById('mainMenu').style.display = 'none';
       document.getElementById('gameArea').style.display = 'block';
