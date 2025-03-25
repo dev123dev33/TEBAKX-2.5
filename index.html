@@ -119,14 +119,13 @@
   <div id="mainMenu" class="container">
     <h1>TebakX v2.5 🔢</h1>
     <p>Selamat datang di TebakX! Uji instingmu dalam tantangan tebak angka! 🚀</p>
-    <button onclick="showVerification()">Mulai Game 🚀</button>
+    <!-- Pemanggilan fungsi langsung ke goToGame() -->
+    <button onclick="goToGame()">Mulai Game 🚀</button>
     <div class="coinDisplay" id="coinDisplay">Koin: 0</div>
     <div class="credits">
       <p>Credits: <strong>NEXGEN GAME</strong></p>
     </div>
   </div>
-
- 
 
   <!-- Area Permainan -->
   <div id="gameArea" class="container" style="display: none;">
@@ -163,8 +162,6 @@
     let bestScore;
     let startTime; // waktu mulai permainan
     let coins = Number(localStorage.getItem('coins')) || 0;
-    
-   
 
     // Update tampilan koin
     function updateCoinDisplay() {
@@ -172,12 +169,20 @@
       localStorage.setItem('coins', coins);
     }
 
-    /
+    // Fungsi untuk pindah ke area permainan
     function goToGame() {
       document.getElementById('mainMenu').style.display = 'none';
       document.getElementById('gameArea').style.display = 'block';
       startGame();
     }
+
+    // Jika Anda ingin menambahkan verifikasi terlebih dahulu, Anda bisa mengubah fungsi ini:
+    /*
+    function showVerification() {
+      // Tambahkan logika verifikasi jika diperlukan
+      goToGame();
+    }
+    */
 
     function startGame() {
       secretNumber = Math.floor(Math.random() * maxNumber) + 1;
@@ -345,7 +350,7 @@
     function shareScore() {
       const highscore = localStorage.getItem('highScore') || 'N/A';
       const result = document.getElementById('result').textContent;
-      const shareText = `I scored ${highscore} attempts in TebakX v2.4! ${result}`;
+      const shareText = `I scored ${highscore} attempts in TebakX v2.5! ${result}`;
       if (navigator.clipboard) {
         navigator.clipboard.writeText(shareText).then(() => {
           alert("Score copied to clipboard! 📋");
@@ -357,7 +362,7 @@
       }
     }
 
-    // Tampilkan event listener untuk tombol Enter pada input tebakan
+    // Event listener untuk tombol Enter pada input tebakan
     document.getElementById('guess').addEventListener('keydown', function(event) {
       if (event.key === 'Enter') {
         makeGuess();
