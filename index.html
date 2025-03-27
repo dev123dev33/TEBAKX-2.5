@@ -279,22 +279,28 @@
     }
 
     function updateHighScore() {
-      bestScore = localStorage.getItem('highScore');
-      if (!bestScore || attempts < bestScore) {
+    let bestScore = localStorage.getItem('highScore');
+    
+    if (!bestScore || attempts < Number(bestScore)) {
         localStorage.setItem('highScore', attempts);
-      }
+    }
+
+    displayHighScore();
+}
+
       displayHighScore();
     }
 
     function displayHighScore() {
-      bestScore = localStorage.getItem('highScore');
-      const highscoreDiv = document.getElementById('highscore');
-      if (bestScore) {
+    let bestScore = localStorage.getItem('highScore');
+    const highscoreDiv = document.getElementById('highscore');
+
+    if (bestScore) {
         highscoreDiv.textContent = 'Best Score: ' + bestScore + ' percobaan 🏆';
-      } else {
+    } else {
         highscoreDiv.textContent = 'Belum ada Best Score.';
-      }
     }
+}
 
     function clearHighScore() {
       localStorage.removeItem('highScore');
