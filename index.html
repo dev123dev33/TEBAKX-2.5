@@ -168,11 +168,10 @@
       localStorage.setItem('coins', coins);
     }
 
-    /// Tambahkan ini jika tidak ada
-function showVerification() {
-  console.log("showVerification() dipanggil");
-  goToGame(); // Panggil fungsi untuk masuk ke permainan
-}
+    /// Tambahkan ini jika tidak adadocument.addEventListener("DOMContentLoaded", function() {
+  document.getElementById("startButton").addEventListener("click", showVerification);
+});
+
 
 
 
