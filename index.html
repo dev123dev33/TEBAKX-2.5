@@ -119,8 +119,7 @@
   <div id="mainMenu" class="container">
     <h1>TebakX v2.5 🔢</h1>
     <p>Selamat datang di TebakX! Uji instingmu dalam tantangan tebak angka! 🚀</p>
-    <!-- Memanggil fungsi showVerification yang sudah didefinisikan -->
-    <button onclick="showVerification()">Mulai Game 🚀</button>
+    <button id="startButton">Mulai Game 🚀</button>
     <div class="coinDisplay" id="coinDisplay">Koin: 0</div>
     <div class="credits">
       <p>Credits: <strong>NEXGEN GAME</strong></p>
@@ -169,10 +168,13 @@
       localStorage.setItem('coins', coins);
     }
 
-    /function showVerification() {
-  // Logika verifikasi bisa ditambahkan di sini
-  goToGame();
+    /// Tambahkan ini jika tidak ada
+function showVerification() {
+  console.log("showVerification() dipanggil");
+  goToGame(); // Panggil fungsi untuk masuk ke permainan
 }
+
+
 
     }
 
