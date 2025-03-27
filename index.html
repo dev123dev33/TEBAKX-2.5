@@ -168,9 +168,14 @@
       localStorage.setItem('coins', coins);
     }
 
-    /// Tambahkan ini jika tidak adadocument.addEventListener("DOMContentLoaded", function() {
-  document.getElementById("startButton").addEventListener("click", showVerification);
-});
+   document.addEventListener("DOMContentLoaded", function() {
+  const tombolMulai = document.getElementById("startButton");
+  if (tombolMulai) {
+    tombolMulai.addEventListener("click", showVerification);
+  } else {
+    console.error("Tombol tidak ditemukan!");
+  }
+
 
 
 
