@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TebakX v2.5 🔢</title>
-  <!-- Google Fonts -->
+  <title>TebakX v2.3 🔢</title>
+  <!-- Google Fonts untuk tampilan modern -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* Reset & Styling Dasar */
+    /* Reset dan styling dasar */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Roboto', sans-serif;
@@ -64,7 +64,7 @@
     #hintBtn { background-color: #4caf50; }
     #shareBtn { background-color: #9c27b0; }
     .result { font-size: 18px; font-weight: bold; color: #333; margin-bottom: 10px; }
-    .guesses, .hint, .feedback, .highscore, .stats, .credits, .coinDisplay { font-size: 16px; margin-bottom: 10px; color: #555; }
+    .guesses, .hint, .feedback, .highscore, .stats, .credits { font-size: 16px; margin-bottom: 10px; color: #555; }
     .clear-buttons button { background-color: #e91e63; }
 
     /* Confetti Styles */
@@ -92,13 +92,13 @@
       100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
     }
 
-    /* Modal Verifikasi */
+    /* Modal verifikasi */
     .modal {
       position: fixed;
       top: 0; left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.6);
+      background: rgba(0,0,0,0.5);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -117,16 +117,22 @@
 <body>
   <!-- Menu Utama -->
   <div id="mainMenu" class="container">
-    <h1>TebakX v2.5 🔢</h1>
-    <p>Selamat datang di TebakX! Uji instingmu dalam tantangan tebak angka! 🚀</p>
-    <button id="startButton">Mulai Game 🚀</button>
-    <div class="coinDisplay" id="coinDisplay">Koin: 0</div>
-    <div class="credits">
-      <p>Credits: <strong>NEXGEN GAME</strong></p>
+    <h1>TebakX v2.3 🔢</h1>
+    <p>Selamat datang di TebakX! Siap uji instingmu dalam tantangan tebak angka? 🚀</p>
+    <button onclick="showVerification()">Mulai Game 🚀</button>
+  </div>
+
+  <!-- Modal Verifikasi -->
+  <div id="verificationModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <h2>Verifikasi</h2>
+      <p>Masukkan kode verifikasi: <strong>zaS nEON</strong></p>
+      <input type="text" id="verificationInput" placeholder="Ketik kode verifikasi">
+      <button onclick="verifyUser()">Verifikasi</button>
     </div>
   </div>
 
-  <!-- Area Permainan -->
+  <!-- Area Permainan (disembunyikan saat awal) -->
   <div id="gameArea" class="container" style="display: none;">
     <p>Tebak angka antara 1 dan 100!</p>
     <input type="number" id="guess" placeholder="Masukkan tebakan">
@@ -160,31 +166,23 @@
     let guessHistory = [];
     let bestScore;
     let startTime; // waktu mulai permainan
-    let coins = Number(localStorage.getItem('coins')) || 0;
 
-    // Update tampilan koin
-    function updateCoinDisplay() {
-      document.getElementById('coinDisplay').textContent = 'Koin: ' + coins;
-      localStorage.setItem('coins', coins);
+    // Tampilkan modal verifikasi
+    function showVerification() {
+      document.getElementById('verificationModal').style.display = 'flex';
     }
 
-   document.addEventListener("DOMContentLoaded", function() {
-  const tombolMulai = document.getElementById("startButton");
-  if (tombolMulai) {
-    tombolMulai.addEventListener("click", showVerification);
-  } else {
-    console.error("Tombol tidak ditemukan!");
-  }
-});
-
-
-
-
-
-
+    // Fungsi verifikasi user (harus memasukkan "zaS nEON")
+    function verifyUser() {
+      const userInput = document.getElementById('verificationInput').value.trim();
+      if (userInput === "zaS nEON") {
+        document.getElementById('verificationModal').style.display = 'none';
+        goToGame();
+      } else {
+        alert("Kode verifikasi salah! ❌");
+      }
     }
 
-    // Fungsi untuk pindah ke area permainan
     function goToGame() {
       document.getElementById('mainMenu').style.display = 'none';
       document.getElementById('gameArea').style.display = 'block';
@@ -208,9 +206,8 @@
       document.getElementById('shareBtn').style.display = 'none';
       document.getElementById('guess').value = '';
       
-      updateHighScore();
+      displayHighScore();
       displayGameStats();
-      updateCoinDisplay();
       console.log("Secret Number (debug):", secretNumber);
     }
 
@@ -259,11 +256,6 @@
         document.getElementById('shareBtn').style.display = 'inline-block';
         updateHighScore();
         updateGameStats(gameDuration);
-        // Hitung koin: Semakin cepat selesai, semakin banyak koin (maks 50)
-        let earnedCoins = Math.max(0, 50 - gameDuration);
-        coins += earnedCoins;
-        alert(`Selamat! Kamu mendapatkan ${earnedCoins} koin! 💰`);
-        updateCoinDisplay();
         showConfetti();
       }
       guessesDiv.textContent = 'Tebakan Anda: ' + guessHistory.join(', ');
@@ -288,28 +280,22 @@
     }
 
     function updateHighScore() {
-    let bestScore = localStorage.getItem('highScore');
-    
-    if (!bestScore || attempts < Number(bestScore)) {
+      bestScore = localStorage.getItem('highScore');
+      if (!bestScore || attempts < bestScore) {
         localStorage.setItem('highScore', attempts);
-    }
-
-    displayHighScore();
-}
-
+      }
       displayHighScore();
     }
 
     function displayHighScore() {
-    let bestScore = localStorage.getItem('highScore');
-    const highscoreDiv = document.getElementById('highscore');
-
-    if (bestScore) {
+      bestScore = localStorage.getItem('highScore');
+      const highscoreDiv = document.getElementById('highscore');
+      if (bestScore) {
         highscoreDiv.textContent = 'Best Score: ' + bestScore + ' percobaan 🏆';
-    } else {
+      } else {
         highscoreDiv.textContent = 'Belum ada Best Score.';
+      }
     }
-}
 
     function clearHighScore() {
       localStorage.removeItem('highScore');
@@ -363,7 +349,7 @@
     function shareScore() {
       const highscore = localStorage.getItem('highScore') || 'N/A';
       const result = document.getElementById('result').textContent;
-      const shareText = `I scored ${highscore} attempts in TebakX v2.5! ${result}`;
+      const shareText = `I scored ${highscore} attempts in TebakX v2.3! ${result}`;
       if (navigator.clipboard) {
         navigator.clipboard.writeText(shareText).then(() => {
           alert("Score copied to clipboard! 📋");
@@ -375,7 +361,7 @@
       }
     }
 
-    // Event listener untuk tombol Enter pada input tebakan
+    // Tambahkan event listener agar tombol Enter pada input tebakan memicu makeGuess()
     document.getElementById('guess').addEventListener('keydown', function(event) {
       if (event.key === 'Enter') {
         makeGuess();
@@ -400,7 +386,10 @@
         confetti.style.animationDelay = Math.random() * 3 + 's';
         confettiContainer.appendChild(confetti);
       }
-      setTimeout(() => { confettiContainer.innerHTML = ''; }, 5000);
+      // Hapus confetti setelah 5 detik
+      setTimeout(() => {
+        confettiContainer.innerHTML = '';
+      }, 5000);
     }
   </script>
 </body>
