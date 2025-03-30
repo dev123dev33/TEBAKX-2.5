@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TebakX v2.3 🔢</title>
+  <title>TebakX v2.4 🔢</title>
   <!-- Google Fonts untuk tampilan modern -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -66,7 +66,6 @@
     .result { font-size: 18px; font-weight: bold; color: #333; margin-bottom: 10px; }
     .guesses, .hint, .feedback, .highscore, .stats, .credits { font-size: 16px; margin-bottom: 10px; color: #555; }
     .clear-buttons button { background-color: #e91e63; }
-
     /* Confetti Styles */
     .confetti-container {
       position: fixed;
@@ -91,7 +90,6 @@
       0% { transform: translateY(0) rotate(0deg); opacity: 1; }
       100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
     }
-
     /* Modal verifikasi */
     .modal {
       position: fixed;
@@ -112,16 +110,20 @@
       max-width: 400px;
       width: 90%;
     }
+    /* Efek Petir Eksklusif (Lightning) */
+    .lightning-effect {
+      color: #f1c40f;
+      text-shadow: 0 0 10px #f1c40f;
+    }
   </style>
 </head>
 <body>
   <!-- Menu Utama -->
   <div id="mainMenu" class="container">
-    <h1>TebakX v2.3 🔢</h1>
+    <h1>TebakX v2.4 🔢</h1>
     <p>Selamat datang di TebakX! Siap uji instingmu dalam tantangan tebak angka? 🚀</p>
     <button onclick="showVerification()">Mulai Game 🚀</button>
   </div>
-
   <!-- Modal Verifikasi -->
   <div id="verificationModal" class="modal" style="display: none;">
     <div class="modal-content">
@@ -131,7 +133,6 @@
       <button onclick="verifyUser()">Verifikasi</button>
     </div>
   </div>
-
   <!-- Area Permainan (disembunyikan saat awal) -->
   <div id="gameArea" class="container" style="display: none;">
     <p>Tebak angka antara 1 dan 100!</p>
@@ -156,10 +157,11 @@
       <p>Credits: <strong>NEXGEN GAME</strong></p>
     </div>
   </div>
-
   <div id="confettiContainer" class="confetti-container"></div>
-
+  
+  <!-- Script ditempatkan di akhir body -->
   <script>
+    // Deklarasi variabel game
     let secretNumber;
     const maxNumber = 100; // Rentang angka: 1 - 100
     let attempts;
@@ -167,12 +169,10 @@
     let bestScore;
     let startTime; // waktu mulai permainan
 
-    // Tampilkan modal verifikasi
     function showVerification() {
       document.getElementById('verificationModal').style.display = 'flex';
     }
 
-    // Fungsi verifikasi user (harus memasukkan "zaS nEON")
     function verifyUser() {
       const userInput = document.getElementById('verificationInput').value.trim();
       if (userInput === "zaS nEON") {
@@ -195,7 +195,11 @@
       guessHistory = [];
       startTime = Date.now();
       
-      document.getElementById('result').textContent = '';
+      // Reset tampilan
+      const resultDiv = document.getElementById('result');
+      resultDiv.textContent = '';
+      resultDiv.classList.remove('lightning-effect'); // pastikan efek petir dihapus saat reset
+
       document.getElementById('guesses').textContent = '';
       document.getElementById('hint').textContent = '';
       document.getElementById('feedback').textContent = '';
@@ -248,7 +252,16 @@
       } else {
         const endTime = Date.now();
         const gameDuration = Math.floor((endTime - startTime) / 1000);
-        resultDiv.textContent = `Selamat! 🎉 Tebakannya benar: ${secretNumber} dalam ${attempts} percobaan dan ${gameDuration} detik.`;
+        let messageText = `Selamat! 🎉 Tebakannya benar: ${secretNumber} dalam ${attempts} percobaan dan ${gameDuration} detik.`;
+        // Cek event tebakan paling cepat
+        const fastestTimeStr = localStorage.getItem('fastestTime');
+        const fastestTime = fastestTimeStr ? Number(fastestTimeStr) : Infinity;
+        if (gameDuration < fastestTime) {
+          localStorage.setItem('fastestTime', gameDuration);
+          messageText += "<br>Event: Tebakan Paling Cepat! ⚡ Efek petir eksklusif!";
+          resultDiv.classList.add('lightning-effect');
+        }
+        resultDiv.innerHTML = messageText;
         document.getElementById('guess').disabled = true;
         document.getElementById('guessBtn').disabled = true;
         document.getElementById('resetBtn').style.display = 'inline-block';
@@ -280,7 +293,7 @@
     }
 
     function updateHighScore() {
-      bestScore = localStorage.getItem('highScore');
+      bestScore = Number(localStorage.getItem('highScore'));
       if (!bestScore || attempts < bestScore) {
         localStorage.setItem('highScore', attempts);
       }
@@ -288,7 +301,7 @@
     }
 
     function displayHighScore() {
-      bestScore = localStorage.getItem('highScore');
+      bestScore = Number(localStorage.getItem('highScore'));
       const highscoreDiv = document.getElementById('highscore');
       if (bestScore) {
         highscoreDiv.textContent = 'Best Score: ' + bestScore + ' percobaan 🏆';
@@ -349,7 +362,7 @@
     function shareScore() {
       const highscore = localStorage.getItem('highScore') || 'N/A';
       const result = document.getElementById('result').textContent;
-      const shareText = `I scored ${highscore} attempts in TebakX v2.3! ${result}`;
+      const shareText = `I scored ${highscore} attempts in TebakX v2.4! ${result}`;
       if (navigator.clipboard) {
         navigator.clipboard.writeText(shareText).then(() => {
           alert("Score copied to clipboard! 📋");
@@ -361,12 +374,17 @@
       }
     }
 
-    // Tambahkan event listener agar tombol Enter pada input tebakan memicu makeGuess()
-    document.getElementById('guess').addEventListener('keydown', function(event) {
-      if (event.key === 'Enter') {
-        makeGuess();
-      }
-    });
+    // Event listener untuk tombol Enter
+    // Karena script ini berada di akhir body, DOM sudah siap.
+    const guessInput = document.getElementById('guess');
+    if (guessInput) {
+      guessInput.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' || event.keyCode === 13) {
+          event.preventDefault();
+          makeGuess();
+        }
+      });
+    }
 
     // Tampilkan menu utama saat halaman dimuat
     window.onload = function() {
@@ -386,7 +404,6 @@
         confetti.style.animationDelay = Math.random() * 3 + 's';
         confettiContainer.appendChild(confetti);
       }
-      // Hapus confetti setelah 5 detik
       setTimeout(() => {
         confettiContainer.innerHTML = '';
       }, 5000);
