@@ -374,17 +374,20 @@
       }
     }
 
-    // Event listener untuk tombol Enter
-    // Karena script ini berada di akhir body, DOM sudah siap.
+    
+  // Event listener untuk tombol Enter
+  document.addEventListener('DOMContentLoaded', function () {
     const guessInput = document.getElementById('guess');
     if (guessInput) {
-      guessInput.addEventListener('keydown', function(event) {
+      guessInput.addEventListener('keydown', function (event) {
         if (event.key === 'Enter' || event.keyCode === 13) {
-          event.preventDefault();
-          makeGuess();
+          event.preventDefault(); // Mencegah perilaku default (misalnya, submit form)
+          makeGuess(); // Panggil fungsi makeGuess
         }
       });
     }
+  });
+
 
     // Tampilkan menu utama saat halaman dimuat
     window.onload = function() {
