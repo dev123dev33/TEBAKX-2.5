@@ -1,10 +1,11 @@
 
-⚠️🚨 Permohonan Maaf & Pengumuman Penting 🚨⚠️
+✨ TebakX v2.4 – Optimasi & Event Baru! ✨
 
-🙏 Kami benar-benar meminta maaf! 🙏 Versi 2.5 membawa banyak bug 🐞❌ yang mengganggu pengalaman bermain 😞. Untuk menjaga kualitas, kami telah mengembalikan game ke versi 2.3 🔙 yang lebih stabil dan nyaman dimainkan 🎮✨.
+Kami dengan senang hati mengumumkan bahwa TebakX masih berlanjut! 🚀 Versi 2.4 hadir dengan peningkatan berikut:
 
-Saat ini, kami sedang fokus mengembangkan proyek baru bernama NEXGEN SIDE ENGINE ⚙️🚀. Karena itu, kemungkinan besar game ini akan tetap di versi 2.3 untuk waktu yang cukup lama ⏳, meskipun kami berharap bisa kembali mengembangkannya di masa depan 🤞✨.
+✅ Peningkatan performa & optimasi untuk pengalaman bermain lebih nyaman.
+✅ Pembersihan bug, kecuali bug Enter yang masih dalam investigasi.
+⚡ Event Efek Petir! Jawab dengan cepat dan lihat efek petir menyambar di layar!
 
-💡 Masih suka dengan game buatan NexGen Game? Kalian bisa mencoba game-game lain dari kami yang mungkin lebih menarik dan seru! 🎮🔥 Kami selalu berusaha menghadirkan pengalaman terbaik untuk para pemain.
+Terima kasih atas dukungan kalian! 🎮🔥 Update berikutnya segera hadir!
 
-💙 Terima kasih atas dukungan dan kesabaran kalian! 🙌 Jika ada perkembangan lebih lanjut, kami pasti akan memberi tahu kalian 📢🔥.
