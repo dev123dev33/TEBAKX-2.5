@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TebakX v2.4 🔢</title>
+  <title>TebakX v2.5 🔢</title>
   <!-- Google Fonts untuk tampilan modern -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -80,15 +80,15 @@
     .confetti {
       position: absolute;
       top: -10px;
-      width: 8px;
-      height: 8px;
-      opacity: 0.8;
+      width: 10px;
+      height: 10px;
+      opacity: 0.9;
       transform: rotate(0deg);
-      animation: confetti-fall 5s linear infinite;
+      animation: confetti-fall 7s linear infinite;
     }
     @keyframes confetti-fall {
       0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
     }
     /* Modal verifikasi */
     .modal {
@@ -115,12 +115,50 @@
       color: #f1c40f;
       text-shadow: 0 0 10px #f1c40f;
     }
+    /* Efek Glow untuk Combo */
+    .combo-glow {
+      color: #f39c12;
+      text-shadow: 0 0 10px #f39c12, 0 0 20px #f39c12, 0 0 30px #f39c12;
+      animation: glow 1.5s infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 10px #f39c12, 0 0 20px #f39c12, 0 0 30px #f39c12;
+      }
+      to {
+        text-shadow: 0 0 20px #f1c40f, 0 0 30px #f1c40f, 0 0 40px #f1c40f;
+      }
+    }
+
+    /* Efek Level Up */
+    .level-up {
+      font-size: 28px;
+      font-weight: bold;
+      color: #27ae60;
+      animation: levelUp 3s ease-in-out;
+    }
+
+    @keyframes levelUp {
+      0% {
+        transform: scale(1);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(2);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
 <body>
   <!-- Menu Utama -->
   <div id="mainMenu" class="container">
-    <h1>TebakX v2.4 🔢</h1>
+    <h1>TebakX v2.5 🔢</h1>
     <p>Selamat datang di TebakX! Siap uji instingmu dalam tantangan tebak angka? 🚀</p>
     <button onclick="showVerification()">Mulai Game 🚀</button>
   </div>
@@ -156,6 +194,7 @@
     <div class="credits">
       <p>Credits: <strong>NEXGEN GAME</strong></p>
     </div>
+    <div id="level" class="level">Level: 1 (Beginner)</div>
   </div>
   <div id="confettiContainer" class="confetti-container"></div>
   
@@ -168,6 +207,44 @@
     let guessHistory = [];
     let bestScore;
     let startTime; // waktu mulai permainan
+    let comboCount = 0; // Untuk sistem combo
+    let level = 1; // Untuk sistem leveling
+
+    // Fungsi untuk memperbarui level
+    function updateLevel() {
+      const levelDiv = document.getElementById('level');
+      if (!levelDiv) {
+        console.error("Elemen level tidak ditemukan!");
+        return;
+      }
+    
+      // Naik level jika comboCount mencapai 5
+      if (comboCount >= 5) {
+        level++;
+        comboCount = 0; // Reset combo setelah naik level
+    
+        // Tampilkan pesan level up
+        const levelUpMessage = document.createElement('div');
+        levelUpMessage.className = 'level-up';
+        levelUpMessage.textContent = `Level Up! 🎉 Kamu sekarang di Level ${level}`;
+        document.body.appendChild(levelUpMessage);
+    
+        // Hapus pesan setelah animasi selesai
+        setTimeout(() => {
+          levelUpMessage.remove();
+        }, 3000); // Durasi animasi diperpanjang menjadi 3 detik
+    
+        // Tampilkan confetti untuk level up
+        showConfetti(50); // Tambahkan lebih banyak confetti
+      }
+    
+      // Tentukan gelar berdasarkan level
+      const titles = ["Beginner", "Pro", "Master", "Legend"];
+      const title = titles[Math.min(level - 1, titles.length - 1)];
+      levelDiv.textContent = `Level: ${level} (${title})`;
+    
+      console.log(`Level diperbarui: ${level} (${title})`);
+    }
 
     function showVerification() {
       document.getElementById('verificationModal').style.display = 'flex';
@@ -230,50 +307,85 @@
       attempts++;
       guessHistory.push(guess);
 
-      const diff = Math.abs(guess - secretNumber);
-      if (guess !== secretNumber) {
-        if (diff <= Math.ceil(maxNumber * 0.05)) {
-          feedbackDiv.textContent = 'Sangat panas! 🔥 Kamu sangat dekat.';
-        } else if (diff <= Math.ceil(maxNumber * 0.1)) {
-          feedbackDiv.textContent = 'Hangat! 😊 Coba lagi.';
-        } else if (diff <= Math.ceil(maxNumber * 0.2)) {
-          feedbackDiv.textContent = 'Cukup dekat, tapi masih jauh. 😐';
-        } else {
-          feedbackDiv.textContent = 'Dingin! ❄️ Tebakanmu terlalu jauh.';
+      if (guess === secretNumber) {
+        // Sistem Combo
+        comboCount++;
+        console.log(`Combo Count: ${comboCount}`);
+        if (comboCount >= 3) {
+          resultDiv.textContent += `\nCombo Bonus! 🔥 Kamu berhasil menjawab dengan benar ${comboCount} kali berturut-turut!`;
         }
-      } else {
-        feedbackDiv.textContent = '';
-      }
 
-      if (guess < secretNumber) {
-        resultDiv.textContent = 'Terlalu kecil! 👇 Coba lagi.';
-      } else if (guess > secretNumber) {
-        resultDiv.textContent = 'Terlalu besar! 👆 Coba lagi.';
-      } else {
+        // Efek visual untuk combo 5+
+        if (comboCount >= 5) {
+          const comboMessage = document.createElement('div');
+          comboMessage.className = 'combo-glow';
+          comboMessage.textContent = `🔥 Combo x${comboCount}! Kamu luar biasa! 🔥`;
+          document.body.appendChild(comboMessage);
+
+          // Hapus pesan combo setelah 5 detik
+          setTimeout(() => {
+            comboMessage.remove();
+          }, 5000); // Durasi diperpanjang menjadi 5 detik
+        }
+
+        // Sistem Leveling
+        updateLevel();
+
+        // Menampilkan pesan kemenangan
         const endTime = Date.now();
         const gameDuration = Math.floor((endTime - startTime) / 1000);
         let messageText = `Selamat! 🎉 Tebakannya benar: ${secretNumber} dalam ${attempts} percobaan dan ${gameDuration} detik.`;
+
         // Cek event tebakan paling cepat
         const fastestTimeStr = localStorage.getItem('fastestTime');
         const fastestTime = fastestTimeStr ? Number(fastestTimeStr) : Infinity;
         if (gameDuration < fastestTime) {
           localStorage.setItem('fastestTime', gameDuration);
-          messageText += "<br>Event: Tebakan Paling Cepat! ⚡ Efek petir eksklusif!";
+          messageText += "\nEvent: Tebakan Paling Cepat! ⚡ Efek petir eksklusif!";
           resultDiv.classList.add('lightning-effect');
         }
+
         resultDiv.innerHTML = messageText;
-        document.getElementById('guess').disabled = true;
-        document.getElementById('guessBtn').disabled = true;
-        document.getElementById('resetBtn').style.display = 'inline-block';
-        document.getElementById('hintBtn').disabled = true;
-        document.getElementById('shareBtn').style.display = 'inline-block';
         updateHighScore();
         updateGameStats(gameDuration);
         showConfetti();
+
+        // Mulai game baru secara otomatis tanpa reset manual
+        setTimeout(() => {
+          startNewRound(); // Mulai ronde baru
+        }, 3000); // Tunggu 3 detik sebelum memulai ronde baru
+      } else {
+        // Reset combo jika tebakan salah
+        comboCount = 0;
+        feedbackDiv.textContent = guess < secretNumber ? 'Terlalu kecil! 👇' : 'Terlalu besar! 👆';
       }
+
       guessesDiv.textContent = 'Tebakan Anda: ' + guessHistory.join(', ');
       guessInput.value = '';
       guessInput.focus();
+    }
+
+    // Fungsi untuk memulai ronde baru tanpa reset total
+    function startNewRound() {
+      secretNumber = Math.floor(Math.random() * maxNumber) + 1;
+      attempts = 0;
+      guessHistory = [];
+      startTime = Date.now();
+
+      // Reset elemen tampilan
+      const resultDiv = document.getElementById('result');
+      resultDiv.textContent = '';
+      resultDiv.classList.remove('lightning-effect');
+
+      document.getElementById('guesses').textContent = '';
+      document.getElementById('hint').textContent = '';
+      document.getElementById('feedback').textContent = '';
+      document.getElementById('guess').disabled = false;
+      document.getElementById('guessBtn').disabled = false;
+      document.getElementById('hintBtn').disabled = false;
+      document.getElementById('guess').value = '';
+
+      console.log("Secret Number (debug):", secretNumber);
     }
 
     function showHint() {
@@ -290,6 +402,7 @@
 
     function resetGame() {
       startGame();
+      comboCount = 0; // Reset combo saat game di-reset
     }
 
     function updateHighScore() {
@@ -396,20 +509,20 @@
     };
 
     // Fungsi untuk menampilkan confetti saat menang
-    function showConfetti() {
+    function showConfetti(amount = 30) {
       const confettiContainer = document.getElementById('confettiContainer');
-      for (let i = 0; i < 30; i++) {
+      for (let i = 0; i < amount; i++) {
         const confetti = document.createElement('div');
         confetti.className = 'confetti';
-        const colors = ['#FFC107', '#FF5722', '#8BC34A', '#00BCD4', '#E91E63'];
+        const colors = ['#FFC107', '#FF5722', '#8BC34A', '#00BCD4', '#E91E63', '#9C27B0', '#3F51B5'];
         confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
         confetti.style.left = Math.random() * 100 + 'vw';
-        confetti.style.animationDelay = Math.random() * 3 + 's';
+        confetti.style.animationDelay = Math.random() * 2 + 's';
         confettiContainer.appendChild(confetti);
       }
       setTimeout(() => {
         confettiContainer.innerHTML = '';
-      }, 5000);
+      }, 7000); // Durasi diperpanjang menjadi 7 detik
     }
   </script>
 </body>
