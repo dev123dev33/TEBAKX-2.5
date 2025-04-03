@@ -17,4 +17,4 @@ Beberapa bug ngeselin di game udah dibantai habis!
 Yuk, update sekarang dan tunjukkan siapa yang paling jago di TebakX! 🎮💥
 
 DIBUAT OLEH
-NEXGEN OFFCIAL
+NEXGEN GAME OFFCIAL
