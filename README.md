@@ -1,13 +1,20 @@
 
-✨ TebakX v2.4 – Optimasi & Event Baru! ✨
+🔥 TebakX v2.5 – Fix & Optimasi! 🚀
+🎯 Apa yang baru?
 
-Kami dengan senang hati mengumumkan bahwa TebakX masih berlanjut! 🚀 Versi 2.4 menghadirkan peningkatan berikut:
+⚡ Sistem Leveling Dioptimalkan!
 
-✅ Peningkatan performa & optimasi untuk pengalaman bermain lebih lancar.
-✅ Perbaikan bug, termasuk bug Enter yang kini telah diperbaiki! 🔧
-⚡ Event Efek Petir! Jawab dengan cepat dan lihat efek petir menyambar di layar!
+Sekarang naik level lebih smooth, nggak terasa berat atau terlalu cepat!
 
-📢 Update berikutnya?
-Kami berhati-hati agar tidak mengulangi kesalahan sebelumnya, jadi update selanjutnya diperkirakan dalam 1–4 minggu ke depan. NexGen Game ingin memastikan setiap pembaruan lebih stabil dan bebas dari masalah besar.
+🔥 Sistem Combo Ditingkatkan!
 
-Terima kasih atas dukungan kalian! 🎮🔥 Tetap nantikan yang terbaru!
+Kombo lebih responsif dan makin seru buat ngejar skor tinggi!
+
+🐛 Bug Fixes!
+
+Beberapa bug ngeselin di game udah dibantai habis!
+
+Yuk, update sekarang dan tunjukkan siapa yang paling jago di TebakX! 🎮💥
+
+DIBUAT OLEH
+NEXGEN OFFCIAL
