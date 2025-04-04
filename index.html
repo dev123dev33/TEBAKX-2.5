@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TebakX v2.5 🔢</title>
+  <title>TebakX v2.6 🔢</title>
   <!-- Google Fonts untuk tampilan modern -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -153,12 +153,19 @@
         opacity: 0;
       }
     }
+
+    @media (max-width: 480px) {
+      .modal-content {
+        padding: 15px;
+        font-size: 14px;
+      }
+    }
   </style>
 </head>
 <body>
   <!-- Menu Utama -->
   <div id="mainMenu" class="container">
-    <h1>TebakX v2.5 🔢</h1>
+    <h1>TebakX v2.6 🔢</h1>
     <p>Selamat datang di TebakX! Siap uji instingmu dalam tantangan tebak angka? 🚀</p>
     <button onclick="showVerification()">Mulai Game 🚀</button>
   </div>
@@ -169,6 +176,7 @@
       <p>Masukkan kode verifikasi: <strong>zaS nEON</strong></p>
       <input type="text" id="verificationInput" placeholder="Ketik kode verifikasi">
       <button onclick="verifyUser()">Verifikasi</button>
+      <button onclick="closeVerificationModal()">Tutup</button>
     </div>
   </div>
   <!-- Area Permainan (disembunyikan saat awal) -->
@@ -220,8 +228,15 @@
     
       // Naik level jika comboCount mencapai 5
       if (comboCount >= 5) {
-        level++;
-        comboCount = 0; // Reset combo setelah naik level
+        const titles = ["Beginner", "Intermediate", "Advanced", "Expert", "Master", "Grandmaster", "Legend"];
+        const maxLevel = titles.length;
+
+        if (level < maxLevel) {
+          level++;
+          comboCount = 0; // Reset combo setelah naik level
+        } else {
+          level = maxLevel; // Tetap di level maksimum
+        }
     
         // Tampilkan pesan level up
         const levelUpMessage = document.createElement('div');
@@ -479,12 +494,20 @@
       if (navigator.clipboard) {
         navigator.clipboard.writeText(shareText).then(() => {
           alert("Score copied to clipboard! 📋");
-        }, () => {
+        }).catch(() => {
           alert("Failed to copy score.");
         });
       } else {
-        alert("Clipboard API not supported.");
+        alert("Clipboard API not supported. Copy this manually: " + shareText);
       }
+    }
+
+    function updateStatistics(attempts, gameDuration) {
+      const stats = JSON.parse(localStorage.getItem('gameStats')) || { totalGames: 0, totalAttempts: 0, totalTime: 0 };
+      stats.totalGames++;
+      stats.totalAttempts += attempts;
+      stats.totalTime += gameDuration;
+      localStorage.setItem('gameStats', JSON.stringify(stats));
     }
 
     
@@ -509,7 +532,7 @@
     };
 
     // Fungsi untuk menampilkan confetti saat menang
-    function showConfetti(amount = 30) {
+    function showConfetti(amount = 15) {
       const confettiContainer = document.getElementById('confettiContainer');
       for (let i = 0; i < amount; i++) {
         const confetti = document.createElement('div');
@@ -523,6 +546,15 @@
       setTimeout(() => {
         confettiContainer.innerHTML = '';
       }, 7000); // Durasi diperpanjang menjadi 7 detik
+      setTimeout(() => {
+        while (confettiContainer.firstChild) {
+          confettiContainer.removeChild(confettiContainer.firstChild);
+        }
+      }, 7000); // Bersihkan setelah 7 detik
+    }
+
+    function closeVerificationModal() {
+      document.getElementById('verificationModal').style.display = 'none';
     }
   </script>
 </body>
