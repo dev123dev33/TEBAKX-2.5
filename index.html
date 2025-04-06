@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TebakX v2.6 🔢</title>
+  <title>TebakX v2.7 🔢</title>
   <!-- Google Fonts untuk tampilan modern -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -96,7 +96,7 @@
       top: 0; left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.5);
+      background: rgba(0, 0, 0, 0.5);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -109,6 +109,34 @@
       text-align: center;
       max-width: 400px;
       width: 90%;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    .modal-content h2 {
+      margin-bottom: 15px;
+      color: #333;
+    }
+    .modal-content ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .modal-content ul li {
+      margin-bottom: 10px;
+      color: #555;
+    }
+    .modal-content button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background-color: #2575fc;
+      color: #fff;
+      transition: background-color 0.3s;
+    }
+    .modal-content button:hover {
+      background-color: #1e63d0;
     }
     /* Efek Petir Eksklusif (Lightning) */
     .lightning-effect {
@@ -161,11 +189,25 @@
       }
     }
   </style>
+  <style>
+    body.light-mode {
+      background: #f4f4f4;
+      color: #333;
+    }
+    body.light-mode .container {
+      background: #fff;
+      color: #333;
+    }
+    body.light-mode button {
+      background-color: #333;
+      color: #fff;
+    }
+  </style>
 </head>
 <body>
   <!-- Menu Utama -->
   <div id="mainMenu" class="container">
-    <h1>TebakX v2.6 🔢</h1>
+    <h1>TebakX v2.7🔢</h1>
     <p>Selamat datang di TebakX! Siap uji instingmu dalam tantangan tebak angka? 🚀</p>
     <button onclick="showVerification()">Mulai Game 🚀</button>
   </div>
@@ -206,6 +248,40 @@
   </div>
   <div id="confettiContainer" class="confetti-container"></div>
   
+  <div style="text-align: center; margin-bottom: 20px;">
+    <button id="themeToggle" onclick="toggleTheme()">🌙 Dark Mode</button>
+  </div>
+
+  <div style="text-align: center; margin-bottom: 20px;">
+    <button id="changelogBtn" onclick="showChangelog()">📜 Lihat Changelog</button>
+  </div>
+
+  <div id="changelogModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <h2>Changelog TebakX</h2>
+      <ul style="text-align: left; max-height: 300px; overflow-y: auto;">
+        <li><strong>v2.7</strong>: 🌗 Dark & Light Mode Toggle, UI adaptif dengan efek transisi halus.</li>
+        <li><strong>v2.6</strong>: ✨ Sistem leveling dan combo ditambahkan.</li>
+        <li><strong>v2.5</strong>: 🐛 Perbaikan bug pada sistem tebakan dan statistik.</li>
+        <li><strong>v2.4</strong>: 📊 Statistik permainan ditambahkan (total games, attempts, waktu rata-rata).</li>
+        <li><strong>v2.3</strong>: 🔄 Tombol reset dan hint ditambahkan.</li>
+        <li><strong>v2.2</strong>: ⚡ Sistem high score dan fastest time ditambahkan.</li>
+        <li><strong>v2.1</strong>: 🚀 Optimisasi performa dan UI lebih responsif.</li>
+        <li><strong>v2.0</strong>: 🔢 Menu utama dengan tombol "Mulai Game 🚀".</li>
+        <li><strong>v1.9</strong>: 🎉 Nama game diubah menjadi TebakX, fitur share score ditambahkan.</li>
+        <li><strong>v1.8</strong>: ✨ Desain modern dengan gradient dan emotikon.</li>
+        <li><strong>v1.7</strong>: ⏱️ Timer dan durasi permainan ditambahkan.</li>
+        <li><strong>v1.6</strong>: 🎨 Desain ulang dengan animasi fade-in dan Google Fonts.</li>
+        <li><strong>v1.5</strong>: 📊 Statistik permainan ditambahkan.</li>
+        <li><strong>v1.4</strong>: 🔥 Feedback suhu untuk tebakan.</li>
+        <li><strong>v1.3</strong>: 🏆 High score dengan localStorage.</li>
+        <li><strong>v1.2</strong>: 💡 Fitur hint untuk angka ganjil/genap.</li>
+        <li><strong>v1.1</strong>: 📝 Riwayat tebakan dan tombol reset.</li>
+      </ul>
+      <button onclick="closeChangelog()">Tutup</button>
+    </div>
+  </div>
+
   <!-- Script ditempatkan di akhir body -->
   <script>
     // Deklarasi variabel game
@@ -323,6 +399,11 @@
       guessHistory.push(guess);
 
       if (guess === secretNumber) {
+        comboCount++;
+        if (comboCount >= 5) {
+          updateLevel();
+        }
+
         // Sistem Combo
         comboCount++;
         console.log(`Combo Count: ${comboCount}`);
@@ -370,8 +451,7 @@
           startNewRound(); // Mulai ronde baru
         }, 3000); // Tunggu 3 detik sebelum memulai ronde baru
       } else {
-        // Reset combo jika tebakan salah
-        comboCount = 0;
+        comboCount = 0; // Reset combo jika tebakan salah
         feedbackDiv.textContent = guess < secretNumber ? 'Terlalu kecil! 👇' : 'Terlalu besar! 👆';
       }
 
@@ -555,6 +635,25 @@
 
     function closeVerificationModal() {
       document.getElementById('verificationModal').style.display = 'none';
+    }
+
+    function toggleTheme() {
+      const body = document.body;
+      const themeToggle = document.getElementById('themeToggle');
+      body.classList.toggle('light-mode');
+      if (body.classList.contains('light-mode')) {
+        themeToggle.textContent = '🌞 Light Mode';
+      } else {
+        themeToggle.textContent = '🌙 Dark Mode';
+      }
+    }
+
+    function showChangelog() {
+      document.getElementById('changelogModal').style.display = 'flex';
+    }
+
+    function closeChangelog() {
+      document.getElementById('changelogModal').style.display = 'none';
     }
   </script>
 </body>
