@@ -1,20 +1,21 @@
 
-🚀 NexGen Game - Update Versi 2.6
-Tanggal Rilis: 4 April 2025, 20:00 WIB
+🎉 TebakX v2.7 RILIS!
+🗓️ Update Tanggal: 5 April 2025
 
-Halo para player dan pengguna setia! Versi 2.6 kali ini hadir dengan peningkatan besar dan penyempurnaan dari feedback kalian. Kami fokus ke performa, kenyamanan pengguna, dan tampilan yang lebih responsif. Yuk simak detail updatenya:
+😅 Kemarin niatnya rilis, eh malah kelupaan. Jadi baru sempet rilis hari ini!
 
-🆕 FITUR BARU:
-🔹 Sistem Leveling + Gelar Keren:
-Naik level dari Beginner sampai Legend! Semakin tinggi level kamu, semakin pro kamu terlihat.
+✨ Changelog:
 
-🔹 Statistik Permainan (Otomatis Tersimpan):
-Pantau total game, durasi main, dan jumlah tebakan kamu. Semua disimpan lokal tanpa ribet!
+🌗 Dark & Light Mode: Kini bisa ganti tema sesuai mood kamu! Transisinya halus, tampilannya juga makin kece.
 
-🔹 Tombol Tutup Modal Manual:
-Gagal masukin kode verifikasi? Gak perlu panik, sekarang ada tombol buat tutup manual.
+📜 Changelog Viewer: Sekarang kamu bisa lihat riwayat update langsung dari gamenya. Lebih transparan dan jelas!
 
-🔧 PERBAIKAN BUG:
+🐛 Perbaikan Bug Minor: Beberapa error kecil di UI dan sistem tebakan udah diberesin. Lebih stabil dan smooth sekarang.
+
+💬 Terima kasih buat semua yang udah ngikutin perjalanan TebakX dari awal. Dari cuma iseng-iseng, sekarang udah jadi project paling serius gw dalam sebulan ini. 🙌
+Next update? Tungguin aja! 🎯
+
+
 🐞 Combo Count Reset Otomatis:
 Combo gak bakal ngestuck lagi pas game reset.
 
