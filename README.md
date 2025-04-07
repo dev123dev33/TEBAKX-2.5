@@ -36,4 +36,4 @@ Modal sekarang nyaman dilihat di semua ukuran layar. Gak kegedean, gak kekecilan
 ⚡ Efek confetti bisa dikontrol – lebih ringan, gak ngelag!
 ⚡ Struktur kode dibersihkan & efisien – loading lebih cepat, performa makin optimal.
 
-🔋 POWERED BY NEXGEN GAME OFFICIAL 🔋
+🔋 POWERED BY XOBE DEVELOPMENT 🔋
