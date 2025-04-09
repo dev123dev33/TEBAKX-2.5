@@ -1,39 +1,25 @@
 
-🎉 TebakX v2.7 RILIS!
-🗓️ Update Tanggal: 5 April 2025
+⚡️ TEBAKX v2.8 Update Notes
+🎮 by VOUNTE · XOBE DEVELOPMENT
 
-😅 Kemarin niatnya rilis, eh malah kelupaan. Jadi baru sempet rilis hari ini!
+🔥 TebakX makin gacor di versi 2.8! Update kali ini fokus ke performa dan stabilitas, biar makin licin dan gak ngambek pas nebak!
 
-✨ Changelog:
+✅ Apa yang Baru?
+🔧 2 Optimasi Performa
 
-🌗 Dark & Light Mode: Kini bisa ganti tema sesuai mood kamu! Transisinya halus, tampilannya juga makin kece.
+Sistem gameplay lebih cepat & responsif
 
-📜 Changelog Viewer: Sekarang kamu bisa lihat riwayat update langsung dari gamenya. Lebih transparan dan jelas!
+Efek combo + UI jadi lebih halus & ringan
 
-🐛 Perbaikan Bug Minor: Beberapa error kecil di UI dan sistem tebakan udah diberesin. Lebih stabil dan smooth sekarang.
+🐞 2 Perbaikan Bug
 
-💬 Terima kasih buat semua yang udah ngikutin perjalanan TebakX dari awal. Dari cuma iseng-iseng, sekarang udah jadi project paling serius gw dalam sebulan ini. 🙌
-Next update? Tungguin aja! 🎯
+Bug skor akhir yang suka diem-diem ilang: FIXED
 
+Tombol tebakan yang suka gak respon: sekarang udah nurut!
 
-🐞 Combo Count Reset Otomatis:
-Combo gak bakal ngestuck lagi pas game reset.
+✨ TebakX v2.8 siap jadi versi paling stabil sejauh ini, dan...
+📌 Road to v3.0 “Anniversary 1 Bulan” sudah dimulai!
 
-🐞 Confetti Dibersihkan Otomatis:
-Kembang api muncul keren, ilang juga otomatis. Game jadi lebih ringan walau dimainkan terus.
-
-🐞 Validasi Input yang Lebih Ketat:
-Masukin huruf atau angka di luar batas? Sekarang langsung dikasih tahu dan dicegah.
-
-🐞 Clipboard Sharing Fix:
-Fitur salin skor sekarang compatible di semua browser, ada fallback kalau browser kamu gak support Clipboard API.
-
-🐞 Tampilan Modal di HP:
-Modal sekarang nyaman dilihat di semua ukuran layar. Gak kegedean, gak kekecilan.
-
-⚙️ OPTIMISASI:
-⚡ Event listener untuk tombol Enter langsung aktif – tinggal tekan Enter buat nebak angka!
-⚡ Efek confetti bisa dikontrol – lebih ringan, gak ngelag!
-⚡ Struktur kode dibersihkan & efisien – loading lebih cepat, performa makin optimal.
-
-🔋 POWERED BY XOBE DEVELOPMENT 🔋
+🧠 Powered by ide orisinal VOUNTE, dibantu oleh ChatGPT & GitHub Copilot.
+🔒 Legal & aman, dibuat dengan hati oleh developer 12 tahun yang OP.
+📍 Powered by XOBE DEVELOPMENT™
