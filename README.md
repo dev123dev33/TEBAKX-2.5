@@ -1,24 +1,41 @@
 
-⚡️ TEBAKX v2.8 Update Notes
-🎮 by VOUNTE · XOBE DEVELOPMENT
+📢 UPDATE TEBAKX v2.9 – AKHIRNYA RILIS!
+🔧 RILIS RESMI OLEH XOBE DEVELOPMENT 🎉
 
-🔥 TebakX makin gacor di versi 2.8! Update kali ini fokus ke performa dan stabilitas, biar makin licin dan gak ngambek pas nebak!
+Halo semuanya!
+Maaf banget karena update ini sedikit tertunda dari jadwal yang direncanakan.
+Kami sadar betapa pentingnya konsistensi untuk para pemain setia kami, dan kami benar-benar minta maaf atas keterlambatan ini. 🙏
 
-✅ Apa yang Baru?
-🔧 2 Optimasi Performa
+Tapi sekarang, TebakX v2.9 akhirnya hadir dengan beberapa fitur dan perbaikan yang bikin pengalaman main lebih seru dan nyaman! 🎮
 
-Sistem gameplay lebih cepat & responsif
+✨ Apa yang Baru di v2.9?
+🎨 Tema Background Random
+Setiap permainan kini punya warna tema yang muncul secara acak.
+Main jadi makin fresh dan gak monoton!
 
-Efek combo + UI jadi lebih halus & ringan
+🧠 Fakta Unik Setelah Menang
+Setiap kali kamu berhasil menebak angka, kamu akan melihat fakta-fakta unik, lucu, dan edukatif. Belajar sambil bermain? Bisa banget! 😄
 
-🐞 2 Perbaikan Bug
+🛠️ Perbaikan & Optimisasi
+🐞 2 Bug Fix
 
-Bug skor akhir yang suka diem-diem ilang: FIXED
+Tombol Hint yang tidak bisa ditekan setelah digunakan – ✅ FIXED
 
-Tombol tebakan yang suka gak respon: sekarang udah nurut!
+Bug minor tampilan – ✅ FIXED
 
-✨ TebakX v2.8 siap jadi versi paling stabil sejauh ini, dan...
-📌 Road to v3.0 “Anniversary 1 Bulan” sudah dimulai!
+⚡ 2 Optimisasi
+
+Performa awal lebih ringan dan cepat, terutama di HP
+
+Input gameplay jadi lebih responsif dan halus
+
+🔧 Kami berkomitmen untuk terus menyempurnakan TebakX ke arah yang lebih baik.
+Versi 3.0 akan segera hadir dengan lebih banyak kejutan! 🎯
+
+Terima kasih atas kesabaran dan dukungannya 🙏
+
+– Tim XOBE DEVELOPMENT (VOUNTE)
+
 
 🧠 Powered by ide orisinal VOUNTE, dibantu oleh ChatGPT & GitHub Copilot.
 🔒 Legal & aman, dibuat dengan hati oleh developer 12 tahun yang OP.
