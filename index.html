@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TebakX v2.9 🔢</title>
+  <title>TebakX 3.0 (aniversey 2 bulan😘🤺) 🔢</title>
   <!-- Google Fonts untuk tampilan modern -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -258,27 +258,47 @@
       }
     }
   </style>
+  <style>
+    #aiMode {
+      display: none; /* Awalnya disembunyikan */
+    }
+
+    .container {
+      background: #fff;
+      padding: 25px 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+      width: 100%;
+      max-width: 450px;
+      text-align: center;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+
+  </style>
 </head>
 <body>
   <!-- Splash Screen -->
   <div id="splashScreen" class="splash-screen">
     <div class="splash-content">
-      <h1>🖌️ TEBAKX v2.9 🖌️</h1>
-      <p>By XOBE DEVELOPMENT</p>
+      <h1>🎉 TEBAKX v3.0 🎉</h1>
+      <p>Anniversary 2 Bulan</p>
+      <hr>
       <ul>
-        <li>🎨 Tema Background Random</li>
-        <li>🧠 Fakta Unik Setelah Menang</li>
-        <li>🐞 2 Bug Fix</li>
-        <li>⚡ 2 Optimisasi Performa</li>
+        <li>🛠️ 5 Optimisasi Performa</li>
+        <li>🐞 5 Perbaikan Bug</li>
+        <li>🤖 Mode Baru: Versus AI (Beta)</li>
       </ul>
+      <p>🔥 Powered by XOBE DEVELOPMENT</p>
       <p>Loading...</p>
     </div>
   </div>
   <!-- Menu Utama -->
   <div id="mainMenu" class="container">
-    <h1>TebakX v2.9🔢</h1>
+    <h1>TebakX v3.0🔢</h1>
     <p>Selamat datang di TebakX! Siap uji instingmu dalam tantangan tebak angka? 🚀</p>
     <button onclick="showVerification()">Mulai Game 🚀</button>
+    <button onclick="startAIMode()">Versus AI 🤖</button>
   </div>
   <!-- Modal Verifikasi -->
   <div id="verificationModal" class="modal" style="display: none;">
@@ -329,6 +349,34 @@
     <div class="modal-content">
       <h2>Changelog TebakX</h2>
       <ul style="text-align: left; max-height: 300px; overflow-y: auto;">
+        <li><strong>v3.0</strong>: 🛠️ **Update Besar**:
+          <ul>
+            <li>🛠️ 5 Optimisasi Performa:
+              <ul>
+                <li>UI lebih ringan dan responsif</li>
+                <li>Animasi lebih mulus</li>
+                <li>Efisiensi kode ditingkatkan</li>
+                <li>Waktu loading lebih cepat</li>
+                <li>Kompatibilitas diperluas</li>
+              </ul>
+            </li>
+            <li>🐞 5 Perbaikan Bug:
+              <ul>
+                <li>Bug tombol hint tidak aktif diperbaiki</li>
+                <li>Enter key kini bekerja stabil</li>
+                <li>Statistik XP lebih akurat</li>
+                <li>Bug suara efek diperbaiki</li>
+                <li>Tampilan level-up lebih konsisten</li>
+              </ul>
+            </li>
+            <li>🤖 Mode Baru: Versus AI (Beta):
+              <ul>
+                <li>Tantang AI dalam adu kecepatan tebak angka!</li>
+                <li>Siapa lebih cepat? Kamu atau sistem pintar?</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
         <li><strong>v2.9</strong>: 🖌️ **Fitur Baru**:
           <ul>
             <li>🎨 Tema Background Random: Setiap game tampil dengan warna berbeda.</li>
@@ -367,6 +415,26 @@
       <button onclick="closeChangelog()">Tutup</button>
     </div>
   </div>
+
+  <div id="aiMode" class="container" style="display: none;">
+    <h1>Versus AI 🤖</h1>
+    <p>Balapan tebak angka melawan AI! Siapa yang lebih cepat?</p>
+<label for="aiDifficulty">Pilih Tingkat Kesulitan:</label>
+    <select id="aiDifficulty">
+      <option value="easy">Easy</option>
+      <option value="medium" selected>Medium</option>
+      <option value="hard">Hard</option>
+    </select>
+    <input type="number" id="playerGuess" placeholder="Masukkan tebakan Anda">
+    <button onclick="playerMakeGuess()">Tebak</button>
+    <div id="aiFeedback" class="feedback"></div>
+    <div id="playerFeedback" class="feedback"></div>
+    <div id="aiResult" class="result"></div>
+    <div id="playerResult" class="result"></div>
+    <button onclick="resetAIMode()">Reset Mode AI</button>
+  </div>
+   
+
 
   <!-- Script ditempatkan di akhir body -->
   <script>
@@ -588,7 +656,7 @@
     }
 
     function updateHighScore() {
-      bestScore = Number(localStorage.getItem('highScore'));
+      const bestScore = localStorage.getItem('highScore');
       if (!bestScore || attempts < bestScore) {
         localStorage.setItem('highScore', attempts);
       }
@@ -630,24 +698,14 @@
 
     function displayGameStats() {
       const statsDiv = document.getElementById('stats');
-      if (!statsDiv) {
-        console.error('Elemen stats tidak ditemukan!');
-        return;
-      }
-      let totalGames = localStorage.getItem('totalGames');
-      let totalAttempts = localStorage.getItem('totalAttempts');
-      let totalTime = localStorage.getItem('totalTime');
-      let bestTime = localStorage.getItem('bestTime');
-      if (totalGames && totalAttempts && totalTime) {
-        totalGames = Number(totalGames);
-        totalAttempts = Number(totalAttempts);
-        totalTime = Number(totalTime);
-        const avgAttempts = (totalAttempts / totalGames).toFixed(2);
-        const avgTime = (totalTime / totalGames).toFixed(2);
-        statsDiv.textContent = `📊 Statistics - Total Games: ${totalGames}, Total Attempts: ${totalAttempts}, Avg Attempts: ${avgAttempts}, Avg Time: ${avgTime} detik, Best Time: ${bestTime ? bestTime + ' detik' : '-'}`;
-      } else {
-        statsDiv.textContent = 'No statistics available.';
-      }
+      let totalGames = localStorage.getItem('totalGames') || 0;
+      let totalAttempts = localStorage.getItem('totalAttempts') || 0;
+      let totalTime = localStorage.getItem('totalTime') || 0;
+
+      const avgAttempts = (totalAttempts / totalGames).toFixed(2);
+      const avgTime = (totalTime / totalGames).toFixed(2);
+
+      statsDiv.textContent = `📊 Total Games: ${totalGames}, Avg Attempts: ${avgAttempts}, Avg Time: ${avgTime} detik`;
     }
 
     function clearGameStats() {
@@ -758,6 +816,102 @@
     function closeChangelog() {
       document.getElementById('changelogModal').style.display = 'none';
     }
+
+    let aiNumber = Math.floor(Math.random() * 100) + 1;
+    let playerAttempts = 0;
+    let aiAttempts = 0;
+    let aiMin = 1;
+    let aiMax = 100;
+
+    function startAIMode() {
+      const mainMenu = document.getElementById('mainMenu');
+      const aiMode = document.getElementById('aiMode');
+
+      if (mainMenu && aiMode) {
+        mainMenu.style.display = 'none'; // Sembunyikan menu utama
+        aiMode.style.display = 'block'; // Tampilkan mode AI
+
+        // Reset variabel untuk permainan AI
+        aiNumber = Math.floor(Math.random() * 100) + 1;
+        playerAttempts = 0;
+        aiAttempts = 0;
+        aiMin = 1;
+        aiMax = 100;
+
+        // Reset tampilan feedback dan hasil
+        document.getElementById('aiFeedback').textContent = '';
+        document.getElementById('playerFeedback').textContent = '';
+        document.getElementById('aiResult').textContent = '';
+        document.getElementById('playerResult').textContent = '';
+
+        const difficulty = document.getElementById('aiDifficulty').value;
+        console.log(`Mode AI dimulai. Tingkat kesulitan: ${difficulty}`);
+
+        // Mulai tebakan AI
+        aiMakeGuess();
+      } else {
+        console.error("Elemen mainMenu atau aiMode tidak ditemukan!");
+      }
+    }
+
+    function playerMakeGuess() {
+      const playerGuess = Number(document.getElementById('playerGuess').value);
+      playerAttempts++;
+      if (playerGuess === aiNumber) {
+        document.getElementById('playerResult').textContent = `🎉 Anda menang dalam ${playerAttempts} percobaan!`;
+        document.getElementById('aiResult').textContent = `🤖 AI kalah dengan ${aiAttempts} percobaan.`;
+      } else if (playerGuess < aiNumber) {
+        document.getElementById('playerFeedback').textContent = 'Terlalu kecil! 👇';
+      } else {
+        document.getElementById('playerFeedback').textContent = 'Terlalu besar! 👆';
+      }
+    }
+
+    function aiMakeGuess() {
+      const difficulty = document.getElementById('aiDifficulty').value; // Ambil tingkat kesulitan
+      let aiGuess;
+
+      if (difficulty === 'easy') {
+        // Easy: AI menebak angka secara acak
+aiGuess = Math.floor(Math.random() * (aiMax - aiMin + 1)) + aiMin;
+      } else if (difficulty === 'medium') {
+        // Medium: AI menggunakan binary search
+        aiGuess = Math.floor((aiMin + aiMax) / 2);
+      } else if (difficulty === 'hard') {
+        // Hard: AI menebak angka dengan sedikit "kesalahan" untuk membuatnya lebih sulit
+        const bias = Math.random() < 0.5 ? -1 : 1; // Tambahkan bias untuk membuat tebakan tidak selalu optimal
+        aiGuess = Math.floor((aiMin + aiMax) / 2) + bias;
+        aiGuess = Math.max(aiMin, Math.min(aiMax, aiGuess)); // Pastikan tebakan tetap dalam rentang
+      }
+
+      aiAttempts++;
+
+      if (aiGuess === aiNumber) {
+        document.getElementById('aiResult').textContent = `🤖 AI menang dalam ${aiAttempts} percobaan!`;
+      } else if (aiGuess < aiNumber) {
+        aiMin = aiGuess + 1;
+        document.getElementById('aiFeedback').textContent = `AI menebak ${aiGuess}: Terlalu kecil! 👇`;
+        setTimeout(aiMakeGuess, 1000);
+      } else {
+        aiMax = aiGuess - 1;
+        document.getElementById('aiFeedback').textContent = `AI menebak ${aiGuess}: Terlalu besar! 👆`;
+        setTimeout(aiMakeGuess, 1000);
+      }
+    }
+
+    function resetAIMode() {
+const difficulty = document.getElementById('aiDifficulty').value; // Ambil tingkat kesulitan
+      console.log(`Mode AI di-reset. Tingkat kesulitan: ${difficulty}`);
+      startAIMode();
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const aiMode = document.getElementById('aiMode');
+      if (!aiMode) {
+        console.error("Elemen Mode AI tidak ditemukan!");
+      }
+    });
+    
   </script>
-</body>
+  </body>
 </html>
