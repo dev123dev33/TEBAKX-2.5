@@ -1,0 +1,99 @@
+
+CHANGELOG LENGKAP TEBAK X by XOBE DEVELOPMENT
+
+🎮 v1.0 – Awal Perjalanan
+- Rilis pertama Tebak X
+- Gameplay sederhana: tebak angka 1–100
+- Tanpa skor, efek, atau UI kompleks
+
+v1.1 – Tambahan Skor & Reset
+- Skor percobaan ditampilkan
+- Tombol reset ditambahkan
+- Beberapa perbaikan tampilan
+
+v1.2 – High Score & Local Storage
+- Menyimpan skor terbaik
+- Tampilkan best score langsung di game
+- Perbaikan bug input dan refresh
+
+v1.3 – UI & Suara Dasar
+- Penambahan efek suara sederhana
+- UI dibuat lebih bersih
+- Struktur HTML & CSS dirapikan
+
+🚧 v2.0 – REBUILD TOTAL
+- Struktur ulang seluruh game
+- Responsive layout + mobile-friendly
+- Tampilan lebih profesional
+- Menu utama, deskripsi, dan tombol mulai ditambahkan
+
+v2.1 – Efek & Suara
+- Tambahan suara saat menang/kalah
+- Efek visual sederhana saat benar
+- Skor otomatis tersimpan
+
+v2.2 – Statistik
+- Statistik percobaan & waktu bermain
+- Penambahan timer
+- Perbaikan minor bug UI
+
+✅ v2.3 – Versi Stabil Dasar
+- UI rapi, skor & statistik lengkap
+- Efek kemenangan responsif
+- Dijadikan basis untuk versi lanjut
+
+🚀 v2.4 – Reborn Update
+- UI diperbarui total
+- Sistem tebakan lebih halus
+- Confetti saat menang
+- Statistik tampil real-time
+- High Score ditampilkan
+
+🔥 v2.5 – Combo & Leveling Update
+- Combo System (tebakan cepat & beruntun)
+- Sistem Leveling (naik level setiap combo tertentu)
+- Efek visual untuk level-up
+- Optimisasi sistem dan animasi
+- Fix tombol hint & enter
+
+v2.6 – Optimisasi & Fix
+- Efisiensi performa ditingkatkan
+- Bug XP, level-up, dan animasi diperbaiki
+
+🌗 v2.7 – Tema & Changelog
+- Mode Tema Gelap & Terang
+- Changelog Panel di menu
+- UI lebih stabil di perangkat kecil
+- Bug tombol reset diperbaiki
+
+⚡ v2.8 – Lightning Update
+- Efek petir jika menebak super cepat
+- 2 optimisasi ringan
+- 2 perbaikan bug suara dan tombol
+- Splash screen update ditambahkan
+
+🌀 v2.9 – Tema Acak & Stabilitas
+- Tema UI bisa acak saat load
+- Bug tombol hint dan animasi diperbaiki
+- Optimisasi loading & respons input
+
+🎉 v3.0 – ANNIVERSARY 2 BULAN
+5 Optimisasi besar:
+- UI lebih ringan
+- Layout stabil
+- Kompatibel semua device
+- Animasi & efek lebih halus
+- Kode lebih efisien
+
+5 Bug Fix penting:
+- Tombol Hint & Enter diperbaiki
+- Statistik & XP sekarang akurat
+- Tampilan level-up lebih rapi
+- Suara & combo stabil kembali
+
+MODE BARU: Versus AI (Beta)
+- Balapan tebak angka lawan AI
+- AI belajar dari tebakanmu
+- Masih dalam tahap pengembangan
+
+🧠 Dibuat oleh: VOUNTE | XOBE DEVELOPMENT
