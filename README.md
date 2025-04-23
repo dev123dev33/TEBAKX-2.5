@@ -9,18 +9,7 @@ Setelah seminggu delay dan drama sama AI yang sok jago, akhirnya update annivers
 📌 Terima kasih buat yang nungguin dan sabar — sekarang kalian bisa nikmatin update paling gokil dari XOBE DEV!
 
 💬 “Lebih lambat rilis, tapi lebih cepat menang lawan AI.”
-Bug minor tampilan – ✅ FIXED
-
-⚡ 2 Optimisasi
-
-Performa awal lebih ringan dan cepat, terutama di HP
-
-Input gameplay jadi lebih responsif dan halus
-
-🔧 Kami berkomitmen untuk terus menyempurnakan TebakX ke arah yang lebih baik.
-Versi 3.0 akan segera hadir dengan lebih banyak kejutan! 🎯
-
-Terima kasih atas kesabaran dan dukungannya 🙏
+Bug minor tampilan – 
 
 – Tim XOBE DEVELOPMENT (VOUNTE)
 
