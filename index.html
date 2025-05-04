@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TebakX 3.0 (aniversey 2 bulan😘🤺) 🔢</title>
+  <title>TebakX 3.1  🔢</title>
   <!-- Google Fonts untuk tampilan modern -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -281,13 +281,16 @@
   <!-- Splash Screen -->
   <div id="splashScreen" class="splash-screen">
     <div class="splash-content">
-      <h1>🎉 TEBAKX v3.0 🎉</h1>
-      <p>Anniversary 2 Bulan</p>
+      <h1>🎉 TEBAKX v3.1 🎉</h1>
+      <p>Update Terbaru: 3 Perbaikan Bug & 3 Optimasi Performa</p>
       <hr>
       <ul>
-        <li>🛠️ 5 Optimisasi Performa</li>
-        <li>🐞 5 Perbaikan Bug</li>
-        <li>🤖 Mode Baru: Versus AI (Beta)</li>
+        <li>🐞 Bug Tombol Reset di Mode AI Diperbaiki</li>
+        <li>🐞 Bug Hint Tidak Muncul Setelah 3 Tebakan Diperbaiki</li>
+        <li>🐞 Bug Level-Up Tidak Konsisten Diperbaiki</li>
+        <li>⚡ Optimasi Sistem Confetti</li>
+        <li>⚡ Optimasi Animasi Splash Screen</li>
+        <li>⚡ Optimasi Sistem AI</li>
       </ul>
       <p>🔥 Powered by XOBE DEVELOPMENT</p>
       <p>Loading...</p>
@@ -295,7 +298,7 @@
   </div>
   <!-- Menu Utama -->
   <div id="mainMenu" class="container">
-    <h1>TebakX v3.0🔢</h1>
+    <h1>TebakX v3.1🔢</h1>
     <p>Selamat datang di TebakX! Siap uji instingmu dalam tantangan tebak angka? 🚀</p>
     <button onclick="showVerification()">Mulai Game 🚀</button>
     <button onclick="startAIMode()">Versus AI 🤖</button>
@@ -464,31 +467,27 @@
         if (level < maxLevel) {
           level++;
           comboCount = 0; // Reset combo setelah naik level
-        } else {
-          level = maxLevel; // Tetap di level maksimum
         }
-    
+
         // Tampilkan pesan level up
         const levelUpMessage = document.createElement('div');
         levelUpMessage.className = 'level-up';
         levelUpMessage.textContent = `Level Up! 🎉 Kamu sekarang di Level ${level}`;
         document.body.appendChild(levelUpMessage);
-    
+
         // Hapus pesan setelah animasi selesai
         setTimeout(() => {
           levelUpMessage.remove();
-        }, 3000); // Durasi animasi diperpanjang menjadi 3 detik
-    
+        }, 3000);
+
         // Tampilkan confetti untuk level up
-        showConfetti(50); // Tambahkan lebih banyak confetti
+        showConfetti(50);
       }
-    
+
       // Tentukan gelar berdasarkan level
       const titles = ["Beginner", "Pro", "Master", "Legend"];
       const title = titles[Math.min(level - 1, titles.length - 1)];
       levelDiv.textContent = `Level: ${level} (${title})`;
-    
-      console.log(`Level diperbarui: ${level} (${title})`);
     }
 
     function showVerification() {
@@ -646,7 +645,7 @@
           : 'Hint: Angka rahasia adalah ganjil. ➖';
         document.getElementById('hintBtn').disabled = true;
       } else {
-        hintDiv.textContent = 'Cobalah beberapa tebakan terlebih dahulu untuk mendapatkan hint! 🤔';
+        hintDiv.textContent = `Cobalah ${3 - attempts} tebakan lagi untuk mendapatkan hint! 🤔`;
       }
     }
 
@@ -773,7 +772,7 @@
     };
 
     // Fungsi untuk menampilkan confetti saat menang
-    function showConfetti(amount = 15) {
+    function showConfetti(amount = 10) {
       const confettiContainer = document.getElementById('confettiContainer');
       if (!confettiContainer) {
         console.error('Confetti container tidak ditemukan!');
@@ -790,7 +789,7 @@
       }
       setTimeout(() => {
         confettiContainer.innerHTML = ''; // Bersihkan semua elemen confetti
-      }, 7000);
+      }, 5000); // Durasi diperpendek menjadi 5 detik
     }
 
     function closeVerificationModal() {
@@ -900,9 +899,16 @@ aiGuess = Math.floor(Math.random() * (aiMax - aiMin + 1)) + aiMin;
     }
 
     function resetAIMode() {
-const difficulty = document.getElementById('aiDifficulty').value; // Ambil tingkat kesulitan
-      console.log(`Mode AI di-reset. Tingkat kesulitan: ${difficulty}`);
-      startAIMode();
+      const aiMode = document.getElementById('aiMode');
+      const mainMenu = document.getElementById('mainMenu');
+
+      if (aiMode && mainMenu) {
+        aiMode.style.display = 'none'; // Sembunyikan mode AI
+        mainMenu.style.display = 'block'; // Tampilkan menu utama
+        console.log("Mode AI di-reset.");
+      } else {
+        console.error("Elemen Mode AI atau Menu Utama tidak ditemukan!");
+      }
     }
 
     document.addEventListener('DOMContentLoaded', function () {
