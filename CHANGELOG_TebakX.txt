@@ -96,4 +96,32 @@ MODE BARU: Versus AI (Beta)
 - AI belajar dari tebakanmu
 - Masih dalam tahap pengembangan
 
+ TebakX v3.1
+Rilis: 4 mei 2025
+
+✨ Fitur Baru
+Tidak ada fitur baru di versi ini, fokus utama adalah perbaikan bug dan peningkatan performa.
+
+🐞 Bug Fixes
+[Fixed] Tombol Reset di Mode AI
+Tombol reset kini berjalan dengan benar dan tidak menyebabkan error atau crash.
+
+[Fixed] Hint Tidak Muncul Setelah 3 Tebakan
+Hint kini tampil otomatis setelah 3 tebakan, sesuai dengan yang dirancang.
+
+[Fixed] Level-Up Tidak Konsisten
+Level-up kini stabil, sistem tidak lagi melewatkan level saat pemain memenuhi syarat.
+
+⚙️ Optimizations
+[Optimized] Sistem Confetti
+Efek confetti telah dioptimasi agar tidak menyebabkan lag atau frame drop.
+
+[Optimized] Animasi Splash Screen
+Splash screen sekarang tampil lebih mulus dan cepat tanpa mengganggu UX.
+
+[Optimized] Responsivitas AI
+AI pada tingkat Medium dan Hard kini lebih cepat merespons, mengurangi delay yang mengganggu.
+
+
+
 🧠 Dibuat oleh: VOUNTE | XOBE DEVELOPMENT
