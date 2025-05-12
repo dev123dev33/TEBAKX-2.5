@@ -1,31 +1,30 @@
 
-🆕 TebakX v3.1 — Update Besar!
-Tanggal Rilis: 29 April 2025
-TebakX terus berkembang! Di versi 3.1 ini, kami fokus memperbaiki bug penting dan mengoptimalkan performa game agar pengalaman bermain makin seru dan mulus! 🔥
+ TebakX v3.2 — Update Tema Custom!
+📅 Rilis: [12 mei 2025]
 
-🐞 Perbaikan Bug
-✅ Bug Tombol Reset di Mode AI
-Tombol reset kini berfungsi dengan benar di mode AI dan mengulang permainan tanpa error.
+TebakX kini hadir dengan fitur Tema Custom, biar kamu bisa main dengan tampilan yang sesuai selera!
 
-✅ Bug Hint Tidak Muncul Setelah 3 Tebakan
-Hint sekarang otomatis muncul setelah 3 tebakan pertama, membantu pemain lebih cepat menebak jawaban.
+🎨 Fitur Baru: Tema Custom
+🔄 Switch Tema Langsung: Ganti tampilan kapan pun tanpa reload
 
-✅ Bug Level-Up Tidak Konsisten
-Sistem level-up telah diperbaiki agar stabil dan tidak lagi melewatkan level saat skor naik.
+🌙 Mode Gelap: Nyaman buat main malam-malam
 
-🚀 Optimasi Performa
-⚙️ Optimasi Sistem Confetti
-Efek confetti lebih ringan dan tidak menyebabkan lag bahkan di device spek rendah.
+☀️ Mode Terang: Bersih dan simpel buat siang hari
 
-⚙️ Optimasi Animasi Splash Screen
-Transisi splash screen kini lebih halus dengan waktu loading yang dipersingkat.
+🕶️ Mode Neon (Eksperimental): Tampilan bercahaya futuristik
 
-⚙️ Optimasi Sistem AI
-AI makin pintar dan cepat! Delay pada level kesulitan Medium dan Hard telah dikurangi, membuat permainan lebih menantang dan responsif.
+🎮 Semua perubahan tersimpan otomatis di local storage!
 
-🏁 Siap Menebak Lagi?
-Mainkan TebakX v3.1 sekarang dan rasakan peningkatan besar di gameplay, animasi, dan stabilitas!
-Versi terbaik sejauh ini — dan kami masih terus mengembangkan!
+⚙️ Optimisasi
+UI tema lebih responsif dan cepat berubah
+
+Performa splash screen disesuaikan dengan tema aktif
+
+🧼 Bug Fix
+Tidak ada bug utama diperbaiki di versi ini — fokus pada fitur visual
+
+🧪 Siap Eksplorasi Warna Baru!
+Mainkan TebakX dengan gaya baru dan rasakan pengalaman personal yang lebih seru!
 
 
 🧠 Powered by ide orisinal VOUNTE, dibantu oleh ChatGPT & GitHub Copilot.
