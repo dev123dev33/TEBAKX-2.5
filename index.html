@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TebakX 3.1  🔢</title>
+  <title>TebakX 3.2  🔢</title>
   <!-- Google Fonts untuk tampilan modern -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -18,6 +18,7 @@
       align-items: center;
       justify-content: center;
       padding: 20px;
+      transition: background 0.5s;
     }
     .container {
       background: #fff;
@@ -188,6 +189,46 @@
         font-size: 14px;
       }
     }
+    /* Tema Neon */
+    body.neon {
+      background: linear-gradient(135deg, #0fffc1, #7e0fff 80%);
+      color: #fff;
+    }
+    body.neon .container {
+      background: rgba(30, 0, 60, 0.85);
+      color: #fff;
+      box-shadow: 0 0 30px #0fffc1, 0 0 60px #7e0fff;
+    }
+    body.neon button {
+      background: linear-gradient(90deg, #0fffc1, #7e0fff);
+      color: #fff;
+      border: 2px solid #0fffc1;
+      text-shadow: 0 0 8px #7e0fff;
+    }
+    body.neon button:hover {
+      background: linear-gradient(90deg, #7e0fff, #0fffc1);
+      color: #fff;
+    }
+    /* Tema Custom */
+    body.custom-theme {
+      /* background diatur via JS */
+      color: #fff;
+    }
+    body.custom-theme .container {
+      background: rgba(40,40,40,0.95);
+      color: #fff;
+      box-shadow: 0 0 30px #ff9800, 0 0 60px #ff9800;
+    }
+    body.custom-theme button {
+      background: linear-gradient(90deg, #ff9800, #ff3c00);
+      color: #fff;
+      border: 2px solid #ff9800;
+      text-shadow: 0 0 8px #ff9800;
+    }
+    body.custom-theme button:hover {
+      background: linear-gradient(90deg, #ff3c00, #ff9800);
+      color: #fff;
+    }
   </style>
   <style>
     body.light-mode {
@@ -274,23 +315,44 @@
       animation: fadeIn 0.5s ease-in-out;
     }
 
-
+    /* Custom Theme Picker */
+    .theme-picker {
+      margin: 10px 0 20px 0;
+      text-align: center;
+    }
+    .theme-picker label {
+      margin-right: 10px;
+      font-weight: bold;
+    }
+    .theme-picker input[type="color"] {
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      margin: 0 5px;
+      cursor: pointer;
+      vertical-align: middle;
+      box-shadow: 0 0 4px #888;
+    }
+    .theme-picker select {
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-right: 10px;
+      font-size: 15px;
+    }
   </style>
 </head>
 <body>
   <!-- Splash Screen -->
   <div id="splashScreen" class="splash-screen">
     <div class="splash-content">
-      <h1>🎉 TEBAKX v3.1 🎉</h1>
-      <p>Update Terbaru: 3 Perbaikan Bug & 3 Optimasi Performa</p>
+      <h1>🎉 TEBAKX v3.2 🎉</h1>
+      <p>Update Terbaru: Custom Tema (Gelap, Terang, Neon, Custom)</p>
       <hr>
       <ul>
-        <li>🐞 Bug Tombol Reset di Mode AI Diperbaiki</li>
-        <li>🐞 Bug Hint Tidak Muncul Setelah 3 Tebakan Diperbaiki</li>
-        <li>🐞 Bug Level-Up Tidak Konsisten Diperbaiki</li>
-        <li>⚡ Optimasi Sistem Confetti</li>
-        <li>⚡ Optimasi Animasi Splash Screen</li>
-        <li>⚡ Optimasi Sistem AI</li>
+        <li>✨ Fitur Tema Neon & Custom</li>
+        <li>🐞 Bugfix & Optimasi</li>
       </ul>
       <p>🔥 Powered by XOBE DEVELOPMENT</p>
       <p>Loading...</p>
@@ -298,8 +360,23 @@
   </div>
   <!-- Menu Utama -->
   <div id="mainMenu" class="container">
-    <h1>TebakX v3.1🔢</h1>
+    <h1>TebakX v3.2🔢</h1>
     <p>Selamat datang di TebakX! Siap uji instingmu dalam tantangan tebak angka? 🚀</p>
+    <div class="theme-picker">
+      <label for="themeSelect">Tema:</label>
+      <select id="themeSelect" onchange="changeTheme()">
+        <option value="dark">Gelap</option>
+        <option value="light">Terang</option>
+        <option value="neon">Neon</option>
+        <option value="custom">Custom</option>
+      </select>
+      <span id="customThemePicker" style="display:none;">
+        <label for="color1">Warna 1:</label>
+        <input type="color" id="color1" value="#6a11cb" onchange="applyCustomTheme()">
+        <label for="color2">Warna 2:</label>
+        <input type="color" id="color2" value="#2575fc" onchange="applyCustomTheme()">
+      </span>
+    </div>
     <button onclick="showVerification()">Mulai Game 🚀</button>
     <button onclick="startAIMode()">Versus AI 🤖</button>
   </div>
@@ -916,6 +993,41 @@ aiGuess = Math.floor(Math.random() * (aiMax - aiMin + 1)) + aiMin;
       if (!aiMode) {
         console.error("Elemen Mode AI tidak ditemukan!");
       }
+    });
+
+    // === TEMA BARU v3.2 ===
+    function changeTheme() {
+      const theme = document.getElementById('themeSelect').value;
+      document.body.classList.remove('light-mode', 'neon', 'custom-theme');
+      if (theme === 'light') {
+        document.body.classList.add('light-mode');
+        document.body.style.background = "#f4f4f4";
+        document.getElementById('customThemePicker').style.display = "none";
+      } else if (theme === 'neon') {
+        document.body.classList.add('neon');
+        document.body.style.background = "linear-gradient(135deg, #0fffc1, #7e0fff 80%)";
+        document.getElementById('customThemePicker').style.display = "none";
+      } else if (theme === 'custom') {
+        document.body.classList.add('custom-theme');
+        document.getElementById('customThemePicker').style.display = "inline-block";
+        applyCustomTheme();
+      } else {
+        // Default: dark
+        document.body.style.background = "linear-gradient(135deg, #6a11cb, #2575fc)";
+        document.getElementById('customThemePicker').style.display = "none";
+      }
+    }
+
+    function applyCustomTheme() {
+      const color1 = document.getElementById('color1').value;
+      const color2 = document.getElementById('color2').value;
+      document.body.classList.add('custom-theme');
+      document.body.style.background = `linear-gradient(135deg, ${color1}, ${color2})`;
+    }
+
+    // Set tema default saat load
+    document.addEventListener('DOMContentLoaded', function () {
+      changeTheme();
     });
     
   </script>
