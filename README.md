@@ -1,32 +1,12 @@
+🚀 Tebak X v3.3 Sudah Mendarat! 🚀
+Haii semuanya! Maaf yaa, udah 2 minggu kita gak nongol 😅 Tapi tenang, kita balik dengan update kece yang pastinya bikin main makin seru!
 
- TebakX v3.2 — Update Tema Custom!
-📅 Rilis: [12 mei 2025]
+✨ Yang baru di versi 3.3:
+🔧 Semua bug udah disikat habis! (penamaan, combo, level, AI, dan lain-lain)
+📱 Full responsif di semua perangkat — HP, tablet, maupun desktop
+🎨 Judul, splash screen, dan label udah pakai versi 3.3
+🧼 Kode lebih bersih, ringan, dan efisien
 
-TebakX kini hadir dengan fitur Tema Custom, biar kamu bisa main dengan tampilan yang sesuai selera!
+❤️ Terima kasih buat kalian yang setia nungguin.
+🗓️ Catat ya, update selanjutnya bakal hadir tanggal 12 Juni! Jangan sampai ketinggalan~
 
-🎨 Fitur Baru: Tema Custom
-🔄 Switch Tema Langsung: Ganti tampilan kapan pun tanpa reload
-
-🌙 Mode Gelap: Nyaman buat main malam-malam
-
-☀️ Mode Terang: Bersih dan simpel buat siang hari
-
-🕶️ Mode Neon (Eksperimental): Tampilan bercahaya futuristik
-
-🎮 Semua perubahan tersimpan otomatis di local storage!
-
-⚙️ Optimisasi
-UI tema lebih responsif dan cepat berubah
-
-Performa splash screen disesuaikan dengan tema aktif
-
-🧼 Bug Fix
-Tidak ada bug utama diperbaiki di versi ini — fokus pada fitur visual
-
-🧪 Siap Eksplorasi Warna Baru!
-Mainkan TebakX dengan gaya baru dan rasakan pengalaman personal yang lebih seru!
-
-
-🧠 Powered by ide orisinal VOUNTE, dibantu oleh ChatGPT & GitHub Copilot.
-🔒 Legal & aman, dibuat dengan hati oleh developer 12 tahun yang OP.
-📍 Powered by XOBE DEVELOPMENT™
