@@ -1,15 +1,14 @@
-🔧 [Update] Tebak X - 12 Juni 2025: Penambahan Quest & Perbaikan Bug
+🔧 [Update] Tebak X - 19 Juni 2025: New Version Zaz Version 3.5
 
-📅 Tanggal Rilis: 12 Juni 2025
+📅 Tanggal Rilis: 19 Juni 2025
 📂 Project: Tebak X
-🎯 Tujuan: Menambahkan sistem Quest dan memperbaiki bug dari versi sebelumnya.
+🎯 Tujuan: Merombak total design ui/ux dan beberapa optimisasi
 
 ✅ Fitur Baru
-Sistem Quest Harian & Mingguan
-Kini pemain dapat menyelesaikan tantangan harian dan mingguan untuk mendapatkan hadiah menarik.
+Tema Baru ZAZ  Theme 
 
-UI Quest Sederhana
-Tampilan popup progress quest yang intuitif dan ringan.
+UI Diperbagus dan dibuat responsiv
+Tampilan UI dibuat lebih profesional lebih responsiv di semua perangkat
 
 Notifikasi Quest Selesai
 Pemberitahuan otomatis ketika quest berhasil diselesaikan.
@@ -24,18 +23,7 @@ Responsivitas UI tombol diperbaiki agar berfungsi di semua perangkat.
 Optimisasi Pemuatan Pertanyaan
 Pertanyaan kini dimuat lebih cepat, mengurangi waktu tunggu.
 
-📌 Catatan Tambahan
-Quest aktif secara otomatis saat game dimulai.
-
-Sistem quest menggunakan waktu lokal perangkat, bukan server.
-
-🔄 Status Update
-✅ Sistem quest telah selesai dibuat
-
-✅ Fitur tambahan shop telah ditambahkan
-
-✅ Bug utama telah diperbaiki
-
-✅ Telah melalui pengujian internal
-
 ✅ Versi stabil dirilis
+
+
+Develop BY XOBE DEVELOPMENT
